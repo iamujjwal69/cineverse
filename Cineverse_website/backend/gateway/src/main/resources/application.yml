@@ -23,7 +23,7 @@ spring:
             allowCredentials: false
       
       routes:
-        # Match both /api/auth/** (from frontend) and /auth/** (direct)
+        # Frontend calls /auth/** → rewrite to /api/auth/** on auth service
         - id: auth-service-api
           uri: ${AUTH_SERVICE_URL:http://localhost:8081}
           predicates:
@@ -36,7 +36,7 @@ spring:
           predicates:
             - Path=/auth/**
           filters:
-            - StripPrefix=0
+            - RewritePath=/auth/(?<segment>.*), /api/auth/${segment}
         
         - id: movie-service
           uri: ${MOVIE_SERVICE_URL:http://localhost:8082}
