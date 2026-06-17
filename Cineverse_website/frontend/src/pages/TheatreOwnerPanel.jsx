@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaTheaterMasks, FaFilm, FaClock, FaChartLine } from 'react-icons/fa';
-import '../styles\AdminPanel.css';
+import '../styles/AdminPanel.css';
 
 const TheatreOwnerPanel = () => {
   const [activeTab, setActiveTab] = useState('overview');
