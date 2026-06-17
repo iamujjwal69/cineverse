@@ -17,10 +17,14 @@ const Dashboard = () => {
   const fetchBookings = async () => {
     try {
       const response = await bookingService.getUserBookings();
-      setBookings(response.data.data || []);
+      const apiBookings = response.data.data || [];
+      // Merge with any demo bookings stored locally
+      const demoBookings = JSON.parse(localStorage.getItem('demoBookings') || '[]');
+      setBookings([...apiBookings, ...demoBookings]);
     } catch (error) {
-      // Booking service not deployed yet - show empty state
-      setBookings([]);
+      // Booking service not deployed — show demo bookings from localStorage
+      const demoBookings = JSON.parse(localStorage.getItem('demoBookings') || '[]');
+      setBookings(demoBookings);
     } finally {
       setLoading(false);
     }

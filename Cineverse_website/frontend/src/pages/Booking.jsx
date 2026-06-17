@@ -95,6 +95,21 @@ const Booking = () => {
       }
 
       setStep(3);
+
+      // Store demo booking in localStorage so dashboard can show it
+      const demoBooking = {
+        id: Date.now(),
+        movieTitle: movie?.title || 'Selected Movie',
+        theatreName: 'CineVerse Theatre',
+        screenName: 'Screen 1',
+        showTime: new Date(Date.now() + 86400000).toISOString(),
+        seatNumbers: selectedSeats.map(s => s.id),
+        totalAmount: calculateTotal(),
+        status: 'CONFIRMED'
+      };
+      const existing = JSON.parse(localStorage.getItem('demoBookings') || '[]');
+      localStorage.setItem('demoBookings', JSON.stringify([demoBooking, ...existing]));
+
       setTimeout(() => {
         navigate('/dashboard');
       }, 3000);
