@@ -42,7 +42,9 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await authService.login(email, password);
-      const { token: newToken } = response.data;
+      // ApiResponse wraps data: { success, message, data: { token, ... } }
+      const authData = response.data.data || response.data;
+      const newToken = authData.token;
       localStorage.setItem('token', newToken);
       setToken(newToken);
       const decoded = jwtDecode(newToken);
@@ -64,7 +66,12 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try {
       const response = await authService.register(userData);
-      return { success: true, message: response.data.message };
+      // ApiResponse: { success, message, data }
+      const body = response.data;
+      if (body.success === false) {
+        return { success: false, message: body.message || 'Registration failed' };
+      }
+      return { success: true, message: body.message || 'Registered successfully' };
     } catch (error) {
       return { 
         success: false, 
