@@ -347,9 +347,9 @@ This project is licensed under the MIT License.
 
 ## 🔗 Links
 
-**GitHub Repository:** [YOUR_GITHUB_REPO_URL_HERE]
+**GitHub Repository:** https://github.com/SrujanJadav/cineverse
+**Live Demo:** https://cineverse-ipsj.onrender.com
 
-**Live Demo:** [YOUR_DEPLOYMENT_URL_HERE]
 
 ## 👥 Contributing
 
