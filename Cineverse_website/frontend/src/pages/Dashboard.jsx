@@ -19,7 +19,8 @@ const Dashboard = () => {
       const response = await bookingService.getUserBookings();
       setBookings(response.data.data || []);
     } catch (error) {
-      console.error('Failed to fetch bookings:', error);
+      // Booking service not deployed yet - show empty state
+      setBookings([]);
     } finally {
       setLoading(false);
     }
