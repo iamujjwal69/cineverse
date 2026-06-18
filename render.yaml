@@ -110,11 +110,10 @@ services:
         value: 8080
 
   # ─────────────────────────────────────────────
-  # Frontend — Static Site (no region allowed)
+  # Frontend — Static Site
   # ─────────────────────────────────────────────
   - type: web
     name: cineverse-frontend
-    plan: free
     runtime: static
     rootDir: Cineverse_website/frontend
     buildCommand: npm install && npm run build
