@@ -24,11 +24,11 @@
 
 ## 🌐 Live Demo
 
-> ### 🚀 **[Deploy your own CineVerse on Render →](https://render.com/deploy?repo=https://github.com/iamujjwal69/cineverse)**
+> ### 🎬 **[https://cineverse-frontend-r4w6.onrender.com](https://cineverse-frontend-r4w6.onrender.com)**
 
-| Feature | Demo Mode (No Backend Needed) |
-|---------|-------------------------------|
-| 🎬 **100+ Movies** | Full catalog with posters, ratings, and filters |
+| Feature | Status |
+|---------|--------|
+| 🎬 **100+ Movies** | Full catalog with real posters, ratings, and filters |
 | 🔐 **Login/Register** | Works with any email/password (demo mode) |
 | 🎫 **Book Tickets** | Complete 3-step booking flow |
 | 💺 **Seat Selection** | Interactive seat map |
