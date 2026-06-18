@@ -126,12 +126,20 @@ const Movies = () => {
                 <Link to={`/movies/${movie.id}`} key={movie.id} className="movie-card glass">
                   <div className="movie-poster">
                     {movie.posterUrl ? (
-                      <img src={movie.posterUrl} alt={movie.title} loading="lazy" />
-                    ) : (
-                      <div className="movie-placeholder">
-                        <span>{movie.title[0]}</span>
-                      </div>
-                    )}
+                      <img
+                        src={movie.posterUrl}
+                        alt={movie.title}
+                        loading="lazy"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.style.display = 'none';
+                          e.target.nextSibling.style.display = 'flex';
+                        }}
+                      />
+                    ) : null}
+                    <div className="movie-placeholder" style={{ display: movie.posterUrl ? 'none' : 'flex' }}>
+                      <span>{movie.title[0]}</span>
+                    </div>
                     <div className="movie-overlay">
                       <button className="btn btn-primary">View Details</button>
                     </div>
