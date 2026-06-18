@@ -14,6 +14,12 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - cineverse-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d cineverse"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
 
   mongodb:
     image: mongo:7.0
@@ -27,6 +33,12 @@ services:
       - mongodb_data:/data/db
     networks:
       - cineverse-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
 
   redis:
     image: redis:7-alpine
@@ -37,6 +49,11 @@ services:
       - redis_data:/data
     networks:
       - cineverse-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
@@ -51,6 +68,12 @@ services:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
       - cineverse-network
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
 
   auth-service:
     build: ./backend/auth-service
@@ -65,9 +88,11 @@ services:
     ports:
       - "8081:8081"
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     networks:
       - cineverse-network
+    restart: on-failure
 
   movie-service:
     build: ./backend/movie-service
@@ -79,10 +104,13 @@ services:
     ports:
       - "8082:8082"
     depends_on:
-      - mongodb
-      - redis
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     networks:
       - cineverse-network
+    restart: on-failure
 
   booking-service:
     build: ./backend/booking-service
@@ -97,14 +125,20 @@ services:
       REDIS_PORT: 6379
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_PORT: 5672
+      RABBITMQ_USER: guest
+      RABBITMQ_PASS: guest
     ports:
       - "8083:8083"
     depends_on:
-      - postgres
-      - redis
-      - rabbitmq
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
     networks:
       - cineverse-network
+    restart: on-failure
 
   gateway:
     build: ./backend/gateway
@@ -122,6 +156,7 @@ services:
       - booking-service
     networks:
       - cineverse-network
+    restart: on-failure
 
   frontend:
     build: ./frontend

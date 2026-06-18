@@ -94,6 +94,9 @@ services:
 
   # ─────────────────────────────────────────────
   # API Gateway (Spring Cloud Gateway)
+  # Render free services communicate via their public HTTPS URLs.
+  # Set AUTH/MOVIE/BOOKING_SERVICE_URL manually in the Render dashboard
+  # to the respective service's external URL after first deploy.
   # ─────────────────────────────────────────────
   - type: web
     name: cineverse-gateway
@@ -104,27 +107,18 @@ services:
     dockerfilePath: ./Dockerfile
     envVars:
       - key: AUTH_SERVICE_URL
-        fromService:
-          name: cineverse-auth
-          type: web
-          property: hostport
+        sync: false   # Set to https://cineverse-auth.onrender.com after first deploy
       - key: MOVIE_SERVICE_URL
-        fromService:
-          name: cineverse-movies
-          type: web
-          property: hostport
+        sync: false   # Set to https://cineverse-movies.onrender.com after first deploy
       - key: BOOKING_SERVICE_URL
-        fromService:
-          name: cineverse-booking
-          type: web
-          property: hostport
+        sync: false   # Set to https://cineverse-booking.onrender.com after first deploy
       - key: JWT_SECRET
-        sync: false  # Must match auth-service JWT_SECRET
+        sync: false   # Must match cineverse-auth JWT_SECRET exactly
       - key: PORT
         value: 8080
 
   # ─────────────────────────────────────────────
-  # Frontend (React + Nginx)
+  # Frontend (React + Vite → Render Static Site)
   # ─────────────────────────────────────────────
   - type: web
     name: cineverse-frontend
@@ -136,10 +130,7 @@ services:
     staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
-        fromService:
-          name: cineverse-gateway
-          type: web
-          envVarKey: RENDER_EXTERNAL_URL
+        sync: false   # Set to https://cineverse-gateway.onrender.com/api after gateway is deployed
     routes:
       - type: rewrite
         source: /*

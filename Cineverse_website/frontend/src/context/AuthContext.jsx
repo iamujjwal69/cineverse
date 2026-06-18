@@ -4,6 +4,9 @@ import authService from '../services/authService';
 
 const AuthContext = createContext(null);
 
+// Key used to persist demo-mode user to localStorage (no fake JWT involved)
+const DEMO_USER_KEY = 'demo_user';
+
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -18,6 +21,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Restore a real JWT session
     if (token) {
       try {
         const decoded = jwtDecode(token);
@@ -29,11 +33,24 @@ export const AuthProvider = ({ children }) => {
             name: decoded.name
           });
         } else {
-          logout();
+          // Token expired — clear it
+          localStorage.removeItem('token');
+          setToken(null);
         }
       } catch (error) {
         console.error('Invalid token:', error);
-        logout();
+        localStorage.removeItem('token');
+        setToken(null);
+      }
+    } else {
+      // Check for a persisted demo-mode session
+      const savedDemo = localStorage.getItem(DEMO_USER_KEY);
+      if (savedDemo) {
+        try {
+          setUser(JSON.parse(savedDemo));
+        } catch {
+          localStorage.removeItem(DEMO_USER_KEY);
+        }
       }
     }
     setLoading(false);
@@ -47,44 +64,34 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('token', newToken);
       setToken(newToken);
       const decoded = jwtDecode(newToken);
-      setUser({
+      const loggedInUser = {
         id: decoded.userId,
         email: decoded.sub,
         role: decoded.role,
         name: decoded.name
-      });
+      };
+      setUser(loggedInUser);
       return { success: true };
     } catch (error) {
-      console.warn('Backend login failed, attempting local demo fallback:', error);
+      // Backend unreachable — fall back to demo mode (role is always USER)
+      console.warn('Backend unavailable, switching to demo mode:', error.message);
       if (email && password) {
-        // Create a mock JWT payload
-        const header = btoa(JSON.stringify({ alg: "HS256", typ: "JWT" }));
-        const role = email.includes("admin") ? "ADMIN" : email.includes("owner") ? "THEATRE_OWNER" : "USER";
-        const name = email.split("@")[0].split(".")[0];
-        const payload = btoa(JSON.stringify({
-          userId: 999,
-          sub: email,
-          role: role,
-          name: name.charAt(0).toUpperCase() + name.slice(1),
-          exp: Math.floor(Date.now() / 1000) + 86400
-        }));
-        const mockToken = `${header}.${payload}.signature`;
-        
-        localStorage.setItem('token', mockToken);
-        setToken(mockToken);
-        
-        setUser({
-          id: 999,
-          email: email,
-          role: role,
-          name: name.charAt(0).toUpperCase() + name.slice(1)
-        });
-        
+        const name = email.split('@')[0].replace(/\./g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+        const demoUser = {
+          id: 0,
+          email,
+          // Demo mode always grants USER role — no privilege escalation via email
+          role: 'USER',
+          name,
+          isDemo: true
+        };
+        localStorage.setItem(DEMO_USER_KEY, JSON.stringify(demoUser));
+        setUser(demoUser);
         return { success: true };
       }
-      return { 
-        success: false, 
-        message: error.response?.data?.message || 'Login failed' 
+      return {
+        success: false,
+        message: error.response?.data?.message || 'Login failed'
       };
     }
   };
@@ -98,19 +105,21 @@ export const AuthProvider = ({ children }) => {
       }
       return { success: true, message: body.message || 'Registered successfully' };
     } catch (error) {
-      console.warn('Backend registration failed, attempting local demo fallback:', error);
+      // Backend unreachable — demo registration
+      console.warn('Backend unavailable, demo registration:', error.message);
       if (userData.email && userData.password) {
-        return { success: true, message: 'Demo registration successful (Demo Mode)' };
+        return { success: true, message: 'Demo registration successful — backend is offline' };
       }
-      return { 
-        success: false, 
-        message: error.response?.data?.message || 'Registration failed' 
+      return {
+        success: false,
+        message: error.response?.data?.message || 'Registration failed'
       };
     }
   };
 
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem(DEMO_USER_KEY);
     setToken(null);
     setUser(null);
   };

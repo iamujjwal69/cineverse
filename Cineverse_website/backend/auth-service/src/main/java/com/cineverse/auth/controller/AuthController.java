@@ -53,4 +53,19 @@ public class AuthController {
         // JWT is stateless, logout handled on client side
         return ResponseEntity.ok(ApiResponse.success("Logged out successfully", null));
     }
+
+    @PostMapping("/send-otp")
+    public ResponseEntity<ApiResponse<String>> sendOtp(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        ApiResponse<String> response = authService.sendOtp(email);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/verify-otp")
+    public ResponseEntity<ApiResponse<String>> verifyOtp(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        String code = request.get("code");
+        ApiResponse<String> response = authService.verifyOtp(email, code);
+        return ResponseEntity.ok(response);
+    }
 }

@@ -23,6 +23,14 @@ const authService = {
 
   getCurrentUser: () => {
     return api.get('/auth/me');
+  },
+
+  sendOtp: (email) => {
+    return api.post('/auth/send-otp', { email });
+  },
+
+  verifyOtp: (email, code) => {
+    return api.post('/auth/verify-otp', { email, code });
   }
 };
 

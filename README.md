@@ -29,18 +29,17 @@
 | Feature | Demo Mode (No Backend Needed) |
 |---------|-------------------------------|
 | 🎬 **100+ Movies** | Full catalog with posters, ratings, and filters |
-| 🔐 **Login/Register** | Works with any email/password |
+| 🔐 **Login/Register** | Works with any email/password (demo mode) |
 | 🎫 **Book Tickets** | Complete 3-step booking flow |
 | 💺 **Seat Selection** | Interactive seat map |
 | 📊 **Dashboard** | Booking history stored locally |
 
-> **💡 Run locally in 30 seconds:** `cd Cineverse_website/frontend && npm install && npm run dev` — the app works in **demo mode** without any backend!
+> **💡 Run locally in 30 seconds:** `cd Cineverse_website/frontend && npm install && npm run dev` — the app works in **demo mode** without any backend.
 
 ---
 
 ## 📑 Table of Contents
 
-- [Live Demo](#-live-demo)
 - [Features](#-features)
 - [Architecture](#-architecture)
 - [Tech Stack](#-tech-stack)
@@ -49,8 +48,7 @@
 - [Running Locally](#-running-locally)
 - [API Documentation](#-api-documentation)
 - [Environment Variables](#-environment-variables)
-- [Deployment](#-deployment)
-- [Screenshots](#-screenshots)
+- [Deployment on Render](#-deployment-on-render)
 - [Contributing](#-contributing)
 - [License](#-license)
 
@@ -64,11 +62,11 @@
 | **Browse Movies** | Explore 100+ movies with search, genre & category filters, and sorting |
 | **Multi-City Support** | Switch between Chandigarh, Delhi NCR, Mumbai, and Bengaluru |
 | **Theatre Selection** | Choose from real theatres (PVR, Cinepolis, INOX) with multiple showtimes |
-| **Seat Booking** | Interactive seat map with real-time availability (8 rows × 12 seats) |
+| **Seat Booking** | Interactive seat map (8 rows × 12 seats) |
 | **Booking History** | View all past & upcoming bookings from the dashboard |
 | **User Authentication** | Register, Login, Logout with JWT-based session management |
 | **Password Recovery** | Forgot password & OTP-based reset flow |
-| **Responsive UI** | Fully responsive design — works on mobile, tablet, and desktop |
+| **Responsive UI** | Fully responsive — works on mobile, tablet, and desktop |
 
 ### 🛡️ For Admins
 | Feature | Description |
@@ -87,8 +85,6 @@
 
 ## 🏗️ Architecture
 
-CineVerse follows a **microservices architecture** with an API Gateway pattern:
-
 ```
 ┌──────────────────────────────────────────────────────────────────┐
 │                         CLIENT (Browser)                         │
@@ -99,7 +95,8 @@ CineVerse follows a **microservices architecture** with an API Gateway pattern:
                            ▼
 ┌──────────────────────────────────────────────────────────────────┐
 │                    API GATEWAY (Spring Cloud)                     │
-│               JWT Validation · CORS · Route Proxying             │
+│         JWT Validation · CORS · Route Proxying                   │
+│         Injects X-User-Email, X-User-Role headers                │
 │                          Port: 8080                              │
 └─────────┬───────────────────┬───────────────────┬────────────────┘
           │                   │                   │
@@ -108,27 +105,15 @@ CineVerse follows a **microservices architecture** with an API Gateway pattern:
 │  AUTH SERVICE   │ │  MOVIE SERVICE  │ │  BOOKING SERVICE     │
 │  Spring Boot    │ │  Spring Boot    │ │  Spring Boot         │
 │  Port: 8081     │ │  Port: 8082     │ │  Port: 8083          │
-│                 │ │                 │ │                      │
-│  • Register     │ │  • CRUD Movies  │ │  • Create Booking    │
-│  • Login/JWT    │ │  • Search       │ │  • Seat Locking      │
-│  • Password     │ │  • Reviews      │ │  • Confirm/Cancel    │
-│    Reset (OTP)  │ │  • Filters      │ │  • Booking History   │
 └────────┬────────┘ └───────┬─────────┘ └──┬──────────┬────────┘
          │                  │              │          │
          ▼                  ▼              ▼          ▼
 ┌──────────────┐   ┌──────────────┐ ┌─────────┐ ┌──────────┐
 │  PostgreSQL  │   │   MongoDB    │ │  Redis  │ │ RabbitMQ │
-│    (Auth &   │   │  (Movie      │ │ (Cache &│ │ (Async   │
-│   Bookings)  │   │   Catalog)   │ │  Locks) │ │  Events) │
+│  (Users &    │   │  (Movie      │ │ (Cache &│ │ (Events) │
+│   Bookings)  │   │   Catalog)   │ │  Locks) │ │          │
 └──────────────┘   └──────────────┘ └─────────┘ └──────────┘
 ```
-
-### Why Microservices?
-
-- **Independent Scaling** — Scale the booking service during peak hours without touching auth
-- **Technology Diversity** — PostgreSQL for relational data, MongoDB for flexible movie catalog
-- **Fault Isolation** — If the movie service goes down, auth and bookings still work
-- **Independent Deployment** — Deploy and update services independently via Docker
 
 ---
 
@@ -142,8 +127,7 @@ CineVerse follows a **microservices architecture** with an API Gateway pattern:
 | **React Router** | Client-Side Routing | 6.20 |
 | **Axios** | HTTP Client with Interceptors | 1.6 |
 | **jwt-decode** | JWT Token Parsing | 4.0 |
-| **React Icons** | Icon Library (Font Awesome) | 4.12 |
-| **Poppins** | Google Font for Typography | — |
+| **React Icons** | Icon Library | 4.12 |
 | **Nginx** | Production Static File Server | Alpine |
 
 ### Backend
@@ -151,30 +135,30 @@ CineVerse follows a **microservices architecture** with an API Gateway pattern:
 |------------|---------|---------|
 | **Spring Boot** | Microservices Framework | 3.2.0 |
 | **Spring Security** | Authentication & Authorization | 6.x |
-| **Spring Cloud Gateway** | API Gateway & Routing | 2023.0.0 |
+| **Spring Cloud Gateway** | API Gateway & JWT Filter | 2023.0.0 |
 | **Spring Data JPA** | ORM for PostgreSQL | 3.2 |
 | **Spring Data MongoDB** | MongoDB Integration | 3.2 |
 | **Spring Data Redis** | Caching & Seat Locking | 3.2 |
 | **Spring AMQP** | RabbitMQ Messaging | 3.2 |
 | **JJWT** | JWT Token Generation & Validation | 0.12.3 |
-| **Lombok** | Boilerplate Code Reduction | Latest |
+| **Lombok** | Boilerplate Reduction | Latest |
 | **Java** | Programming Language | 17 (LTS) |
 
 ### Databases & Messaging
 | Technology | Purpose | Version |
 |------------|---------|---------|
-| **PostgreSQL** | User accounts, bookings, payments | 15 Alpine |
-| **MongoDB** | Movie catalog (flexible schema) | 7.0 |
+| **PostgreSQL** | User accounts & bookings | 15 Alpine |
+| **MongoDB** | Movie catalog | 7.0 |
 | **Redis** | Session cache & seat lock TTL | 7 Alpine |
-| **RabbitMQ** | Async event processing (booking events) | 3 Management |
+| **RabbitMQ** | Async event processing | 3 Management |
 
-### DevOps & Deployment
+### DevOps
 | Technology | Purpose |
 |------------|---------|
-| **Docker** | Containerization of all services |
+| **Docker** | Containerization |
 | **Docker Compose** | Local multi-container orchestration |
-| **GitHub Actions** | CI/CD Pipeline (build + deploy) |
-| **Render** | Cloud hosting (frontend + backend) |
+| **GitHub Actions** | CI/CD (build verification) |
+| **Render** | Cloud hosting |
 | **Nginx** | Reverse proxy, gzip, SPA routing |
 
 ---
@@ -183,100 +167,29 @@ CineVerse follows a **microservices architecture** with an API Gateway pattern:
 
 ```
 cineverse/
+├── Cineverse_website/
+│   ├── frontend/                        # React + Vite application
+│   │   ├── src/
+│   │   │   ├── components/              # Navbar, ProtectedRoute
+│   │   │   ├── pages/                   # Home, Movies, Booking, Dashboard, etc.
+│   │   │   ├── services/                # Axios API clients + mockMovies fallback
+│   │   │   ├── context/AuthContext.jsx  # Global auth state (JWT + demo mode)
+│   │   │   └── styles/                  # Per-component CSS
+│   │   ├── Dockerfile                   # Multi-stage: node → nginx
+│   │   ├── nginx.conf                   # SPA routing + gzip + /api proxy
+│   │   └── package.json
+│   │
+│   ├── backend/
+│   │   ├── auth-service/               # JWT auth, users, OTP — fully implemented
+│   │   ├── movie-service/              # Movie catalog (stub, MongoDB + Redis)
+│   │   ├── booking-service/            # Bookings (stub, PostgreSQL + Redis + RabbitMQ)
+│   │   └── gateway/                    # Spring Cloud Gateway + JWT global filter
+│   │
+│   └── docker-compose.yml              # Full-stack with health checks
 │
-├── 📂 Cineverse_website/
-│   │
-│   ├── 📂 frontend/                     # React Application (Vite)
-│   │   ├── 📂 src/
-│   │   │   ├── 📂 components/           # Reusable UI Components
-│   │   │   │   ├── Navbar.jsx           #   Navigation bar with city selector
-│   │   │   │   └── ProtectedRoute.jsx   #   Route guard (auth + role check)
-│   │   │   │
-│   │   │   ├── 📂 pages/               # Page Components
-│   │   │   │   ├── Home.jsx             #   Landing page with hero section
-│   │   │   │   ├── Movies.jsx           #   Movie browsing with filters
-│   │   │   │   ├── MovieDetails.jsx     #   Single movie details + reviews
-│   │   │   │   ├── Booking.jsx          #   3-step booking flow
-│   │   │   │   ├── Dashboard.jsx        #   User dashboard & booking history
-│   │   │   │   ├── Login.jsx            #   Login form
-│   │   │   │   ├── Signup.jsx           #   Registration form
-│   │   │   │   ├── Profile.jsx          #   User profile management
-│   │   │   │   ├── ForgotPassword.jsx   #   Password recovery
-│   │   │   │   ├── ResetPassword.jsx    #   Password reset with OTP
-│   │   │   │   ├── AdminPanel.jsx       #   Admin dashboard
-│   │   │   │   └── TheatreOwnerPanel.jsx#   Theatre owner dashboard
-│   │   │   │
-│   │   │   ├── 📂 services/            # API Service Layer
-│   │   │   │   ├── api.js               #   Axios instance + interceptors
-│   │   │   │   ├── authService.js       #   Auth API calls
-│   │   │   │   ├── movieService.js      #   Movie API calls
-│   │   │   │   ├── bookingService.js    #   Booking API calls
-│   │   │   │   └── mockMovies.js        #   100+ mock movies (demo fallback)
-│   │   │   │
-│   │   │   ├── 📂 context/             # React Context
-│   │   │   │   └── AuthContext.jsx      #   Global auth state management
-│   │   │   │
-│   │   │   ├── 📂 styles/              # CSS Stylesheets
-│   │   │   │   ├── global.css           #   Design system & CSS variables
-│   │   │   │   ├── Navbar.css           #   Navigation styles
-│   │   │   │   ├── Home.css             #   Landing page styles
-│   │   │   │   ├── Movies.css           #   Movie grid styles
-│   │   │   │   ├── MovieDetails.css     #   Movie detail page styles
-│   │   │   │   ├── Booking.css          #   Booking flow styles
-│   │   │   │   ├── Dashboard.css        #   Dashboard styles
-│   │   │   │   ├── Auth.css             #   Login/Signup styles
-│   │   │   │   ├── Profile.css          #   Profile page styles
-│   │   │   │   └── AdminPanel.css       #   Admin panel styles
-│   │   │   │
-│   │   │   ├── App.jsx                  # Root component with routing
-│   │   │   └── main.jsx                 # Entry point
-│   │   │
-│   │   ├── index.html                   # HTML template
-│   │   ├── vite.config.js               # Vite configuration
-│   │   ├── Dockerfile                   # Multi-stage Docker build
-│   │   ├── nginx.conf                   # Nginx config (SPA + gzip + proxy)
-│   │   └── package.json                 # Dependencies
-│   │
-│   ├── 📂 backend/
-│   │   ├── 📂 auth-service/             # Authentication Microservice
-│   │   │   ├── 📂 src/main/java/com/cineverse/auth/
-│   │   │   │   ├── config/              #   Security & CORS config
-│   │   │   │   ├── controller/          #   REST endpoints
-│   │   │   │   ├── dto/                 #   Request/Response DTOs
-│   │   │   │   ├── model/               #   JPA entities (User, OTP)
-│   │   │   │   ├── repository/          #   Spring Data repositories
-│   │   │   │   ├── service/             #   Business logic
-│   │   │   │   ├── util/                #   JWT utility class
-│   │   │   │   └── exception/           #   Custom exceptions
-│   │   │   ├── Dockerfile
-│   │   │   └── pom.xml
-│   │   │
-│   │   ├── 📂 movie-service/            # Movie Catalog Microservice
-│   │   │   ├── 📂 src/main/java/com/cineverse/movies/
-│   │   │   ├── Dockerfile
-│   │   │   └── pom.xml
-│   │   │
-│   │   ├── 📂 booking-service/          # Booking & Theatre Microservice
-│   │   │   ├── 📂 src/main/java/com/cineverse/booking/
-│   │   │   ├── Dockerfile
-│   │   │   └── pom.xml
-│   │   │
-│   │   └── 📂 gateway/                  # API Gateway
-│   │       ├── 📂 src/main/java/com/cineverse/gateway/
-│   │       ├── Dockerfile
-│   │       └── pom.xml
-│   │
-│   ├── 📂 scripts/                      # Setup & utility scripts
-│   │   ├── setup.sh                     #   Linux/Mac setup
-│   │   └── setup.ps1                    #   Windows setup
-│   │
-│   ├── docker-compose.yml               # Full-stack orchestration
-│   └── .gitignore
-│
-├── 📂 .github/workflows/
-│   └── cicd.yml                         # GitHub Actions CI/CD pipeline
-│
-└── README.md                            # ← You are here
+├── .github/workflows/cicd.yml           # Build verification on push to main
+├── render.yaml                          # Render Blueprint (IaC)
+└── README.md
 ```
 
 ---
@@ -285,62 +198,53 @@ cineverse/
 
 ### Prerequisites
 
-| Requirement | Minimum Version | Purpose |
-|-------------|-----------------|---------|
-| **Node.js** | 18+ | Frontend build & dev server |
-| **npm** | 9+ | Package management |
-| **Java JDK** | 17+ | Backend services |
-| **Maven** | 3.6+ | Java dependency management |
-| **Docker** | 20+ | Containerization |
-| **Docker Compose** | 2.0+ | Multi-container orchestration |
-
-### Quick Start with Docker (Recommended)
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/iamujjwal69/cineverse.git
-cd cineverse/Cineverse_website
-
-# 2. Start all services (databases + backend + frontend)
-docker-compose up -d
-
-# 3. Wait ~60 seconds for services to initialize, then open:
-#    Frontend  → http://localhost:3000
-#    Gateway   → http://localhost:8080
-#    RabbitMQ  → http://localhost:15672 (guest/guest)
-```
-
-That's it! All 7 services will start automatically. 🎉
+| Requirement | Minimum Version |
+|-------------|-----------------|
+| **Node.js** | 18+ |
+| **Java JDK** | 17+ |
+| **Maven** | 3.6+ |
+| **Docker + Compose** | 20+ / 2.0+ |
 
 ---
 
-## 💻 Running Locally (Development Mode)
+## 💻 Running Locally
 
-### Option 1: Full Stack (Docker for databases, local for code)
+### Option 1: Docker Compose (Full Stack)
+
+```bash
+# Clone the repo
+git clone https://github.com/iamujjwal69/cineverse.git
+cd cineverse/Cineverse_website
+
+# Build and start all services (databases + backend + frontend)
+docker-compose up -d
+
+# Wait ~60 seconds for all services to be healthy, then open:
+#   Frontend  → http://localhost:3000
+#   Gateway   → http://localhost:8080
+#   RabbitMQ  → http://localhost:15672  (guest / guest)
+```
+
+> Health checks are configured on all databases, so backend services only start once PostgreSQL / MongoDB / Redis / RabbitMQ are ready.
+
+### Option 2: Databases in Docker, Services Local
 
 ```bash
 # Step 1: Start only the databases
 cd Cineverse_website
 docker-compose up postgres mongodb redis rabbitmq -d
 
-# Step 2: Run Backend Services (each in a separate terminal)
+# Step 2: Run backend services (separate terminals)
 cd backend/auth-service    && mvn spring-boot:run    # → :8081
 cd backend/movie-service   && mvn spring-boot:run    # → :8082
 cd backend/booking-service && mvn spring-boot:run    # → :8083
 cd backend/gateway         && mvn spring-boot:run    # → :8080
 
-# Step 3: Run Frontend
-cd frontend
-npm install
-npm run dev                                          # → :3000
+# Step 3: Run frontend
+cd frontend && npm install && npm run dev             # → :3000
 ```
 
-### Option 2: Frontend Only (Demo Mode)
-
-The frontend includes a **smart fallback system** — if the backend is unreachable, it automatically:
-- Loads **100+ mock movies** with real posters, ratings, and metadata
-- Enables **demo login** (any email/password works)
-- Stores **bookings in localStorage**
+### Option 3: Frontend Only (Demo Mode)
 
 ```bash
 cd Cineverse_website/frontend
@@ -349,51 +253,55 @@ npm run dev
 # Open http://localhost:3000
 ```
 
-> **Demo Login Tip:** Use `admin@test.com` for Admin role, `owner@test.com` for Theatre Owner role, or any other email for regular User role.
+The frontend automatically switches to **demo mode** when the backend is unreachable:
+- Loads **100+ mock movies** with real posters and metadata
+- Any email/password combination works for login (granted `USER` role)
+- Bookings are stored in `localStorage`
 
 ---
 
 ## 📚 API Documentation
 
-### Auth Service — Port `8081`
+All requests go through the gateway on port `8080`. Authenticated endpoints require `Authorization: Bearer <JWT>`.
 
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
+### Auth Service (`/api/auth`)
+
+| Method | Endpoint | Auth Required | Description |
+|--------|----------|:---:|-------------|
 | `POST` | `/api/auth/register` | ❌ | Register a new user |
-| `POST` | `/api/auth/login` | ❌ | Login and receive JWT token |
-| `POST` | `/api/auth/logout` | ✅ | Invalidate current session |
-| `POST` | `/api/auth/forgot-password` | ❌ | Request OTP for password reset |
-| `POST` | `/api/auth/reset-password` | ❌ | Reset password with OTP |
+| `POST` | `/api/auth/login` | ❌ | Login and receive JWT |
+| `POST` | `/api/auth/logout` | ✅ | Logout (stateless no-op) |
+| `POST` | `/api/auth/forgot-password` | ❌ | Request password reset token |
+| `POST` | `/api/auth/reset-password` | ❌ | Reset password with token |
+| `POST` | `/api/auth/send-otp` | ❌ | Send OTP to email before registration |
+| `POST` | `/api/auth/verify-otp` | ❌ | Verify OTP code |
 | `GET`  | `/api/auth/me` | ✅ | Get current user profile |
 
-### Movie Service — Port `8082`
+### Movie Service (`/api/movies`)
 
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| `GET` | `/api/movies` | ❌ | List all movies (paginated, filterable) |
-| `GET` | `/api/movies/:id` | ❌ | Get movie details by ID |
-| `GET` | `/api/movies/search?query=...` | ❌ | Full-text search across title, genre, cast |
-| `POST` | `/api/movies` | ✅ Admin | Create a new movie |
-| `PUT` | `/api/movies/:id` | ✅ Admin | Update movie details |
-| `DELETE` | `/api/movies/:id` | ✅ Admin | Delete a movie |
-| `POST` | `/api/movies/:id/reviews` | ✅ | Add a review to a movie |
-| `GET` | `/api/movies/:id/reviews` | ❌ | Get all reviews for a movie |
+| Method | Endpoint | Auth Required | Description |
+|--------|----------|:---:|-------------|
+| `GET` | `/api/movies` | ❌ | List movies (paginated, filterable) |
+| `GET` | `/api/movies/:id` | ❌ | Get movie by ID |
+| `GET` | `/api/movies/search?query=` | ❌ | Full-text search |
+| `POST` | `/api/movies` | ✅ Admin | Create movie |
+| `PUT` | `/api/movies/:id` | ✅ Admin | Update movie |
+| `DELETE` | `/api/movies/:id` | ✅ Admin | Delete movie |
+| `POST` | `/api/movies/:id/reviews` | ✅ | Add review |
+| `GET` | `/api/movies/:id/reviews` | ❌ | Get reviews |
 
-### Booking Service — Port `8083`
+### Booking Service (`/api/bookings`)
 
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| `GET` | `/api/bookings/theatres` | ❌ | List all theatres |
-| `GET` | `/api/bookings/shows?movieId=&date=` | ❌ | Get shows for a movie |
-| `GET` | `/api/bookings/shows/:id` | ❌ | Get show details |
-| `GET` | `/api/bookings/shows/:id/seats` | ❌ | Get seat layout & availability |
-| `POST` | `/api/bookings/shows/:id/lock` | ✅ | Lock seats temporarily (10 min TTL) |
-| `POST` | `/api/bookings` | ✅ | Create a new booking |
-| `POST` | `/api/bookings/:id/confirm` | ✅ | Confirm a pending booking |
-| `POST` | `/api/bookings/:id/cancel` | ✅ | Cancel a booking |
-| `GET` | `/api/bookings/my-bookings` | ✅ | Get current user's booking history |
-
-> All authenticated endpoints require a `Bearer <JWT>` token in the `Authorization` header.
+| Method | Endpoint | Auth Required | Description |
+|--------|----------|:---:|-------------|
+| `GET` | `/api/bookings/theatres` | ❌ | List theatres |
+| `GET` | `/api/bookings/shows?movieId=&date=` | ❌ | Get shows |
+| `GET` | `/api/bookings/shows/:id/seats` | ❌ | Seat layout & availability |
+| `POST` | `/api/bookings/shows/:id/lock` | ✅ | Lock seats (10 min TTL) |
+| `POST` | `/api/bookings` | ✅ | Create booking |
+| `POST` | `/api/bookings/:id/confirm` | ✅ | Confirm booking |
+| `POST` | `/api/bookings/:id/cancel` | ✅ | Cancel booking |
+| `GET` | `/api/bookings/my-bookings` | ✅ | User booking history |
 
 ---
 
@@ -407,13 +315,13 @@ VITE_API_URL=http://localhost:8080/api
 ### Auth Service
 | Variable | Default | Description |
 |----------|---------|-------------|
+| `DATABASE_URL` | — | Full JDBC URL (used by Render; overrides `DB_*`) |
 | `DB_HOST` | `localhost` | PostgreSQL host |
 | `DB_PORT` | `5432` | PostgreSQL port |
 | `DB_NAME` | `cineverse` | Database name |
 | `DB_USER` | `postgres` | Database username |
 | `DB_PASSWORD` | `postgres` | Database password |
-| `DATABASE_URL` | — | Full JDBC URL (overrides individual DB vars) |
-| `JWT_SECRET` | Auto-generated | Secret key for JWT signing |
+| `JWT_SECRET` | — | Secret key for JWT signing (required) |
 
 ### Movie Service
 | Variable | Default | Description |
@@ -425,15 +333,14 @@ VITE_API_URL=http://localhost:8080/api
 ### Booking Service
 | Variable | Default | Description |
 |----------|---------|-------------|
+| `DATABASE_URL` | — | Full JDBC URL (used by Render) |
 | `DB_HOST` | `localhost` | PostgreSQL host |
 | `DB_PORT` | `5432` | PostgreSQL port |
 | `DB_NAME` | `cineverse` | Database name |
-| `DB_USER` | `postgres` | Database username |
-| `DB_PASSWORD` | `postgres` | Database password |
+| `DB_USER` | `postgres` | Username |
+| `DB_PASSWORD` | `postgres` | Password |
 | `REDIS_HOST` | `localhost` | Redis host |
-| `REDIS_PORT` | `6379` | Redis port |
 | `RABBITMQ_HOST` | `localhost` | RabbitMQ host |
-| `RABBITMQ_PORT` | `5672` | RabbitMQ port |
 | `RABBITMQ_USER` | `guest` | RabbitMQ username |
 | `RABBITMQ_PASS` | `guest` | RabbitMQ password |
 
@@ -443,87 +350,67 @@ VITE_API_URL=http://localhost:8080/api
 | `AUTH_SERVICE_URL` | `http://localhost:8081` | Auth service base URL |
 | `MOVIE_SERVICE_URL` | `http://localhost:8082` | Movie service base URL |
 | `BOOKING_SERVICE_URL` | `http://localhost:8083` | Booking service base URL |
-| `JWT_SECRET` | Same as Auth Service | Must match auth-service secret |
+| `JWT_SECRET` | — | **Must match the auth-service JWT_SECRET exactly** |
 
 ---
 
-## 🌐 Deployment
+## 🌐 Deployment on Render
 
-### One-Click Deploy on Render (Blueprint)
+### One-Click Deploy (Render Blueprint)
 
-This project includes a `render.yaml` file for **Infrastructure-as-Code** deployment:
+1. **Fork** this repo to your GitHub account
+2. Sign up / log in at [render.com](https://render.com)
+3. Go to **Dashboard → New → Blueprint**
+4. Connect the forked repo — Render detects `render.yaml` automatically
+5. Click **Apply**
 
-1. **Sign up** at [render.com](https://render.com) (free tier available)
-2. Go to **Dashboard → New → Blueprint**
-3. Connect your GitHub repo: `iamujjwal69/cineverse`
-4. Render will auto-detect `render.yaml` and create all services
-5. Click **Apply** — done! 🎉
+> **After the first deploy**, you must set a few env vars manually in the Render dashboard (they are marked `sync: false` in `render.yaml`):
+>
+> | Service | Variable | Value |
+> |---------|----------|-------|
+> | `cineverse-gateway` | `AUTH_SERVICE_URL` | `https://cineverse-auth.onrender.com` |
+> | `cineverse-gateway` | `MOVIE_SERVICE_URL` | `https://cineverse-movies.onrender.com` |
+> | `cineverse-gateway` | `BOOKING_SERVICE_URL` | `https://cineverse-booking.onrender.com` |
+> | `cineverse-gateway` | `JWT_SECRET` | Copy the **same value** from `cineverse-auth`'s env vars |
+> | `cineverse-movies` | `MONGO_URI` | Your [MongoDB Atlas](https://www.mongodb.com/atlas) free cluster URI |
+> | `cineverse-frontend` | `VITE_API_URL` | `https://cineverse-gateway.onrender.com/api` |
+>
+> After saving, **redeploy** `cineverse-gateway` and `cineverse-frontend`.
 
-### Manual Deployment on Render (Step-by-Step)
+### Manual Deploy (Step-by-Step)
 
-If you prefer setting up each service individually:
+#### Step 1 — Databases
 
-#### Step 1: Create Free Databases
+| Database | Provider | Plan |
+|----------|----------|------|
+| **PostgreSQL** | Render (built-in) | Free |
+| **MongoDB** | [MongoDB Atlas](https://www.mongodb.com/atlas) | Free M0 |
 
-| Database | Provider | Free Tier |
-|----------|----------|-----------|
-| **PostgreSQL** | [Render PostgreSQL](https://render.com/docs/databases) | Free 256MB |
-| **MongoDB** | [MongoDB Atlas](https://www.mongodb.com/atlas) | Free M0 cluster |
+Redis and RabbitMQ are not available on Render free tier — the app runs in degraded mode without them (caching and async events disabled).
 
-> Redis and RabbitMQ are optional — the app works without them in demo mode.
+#### Step 2 — Backend Services
 
-#### Step 2: Deploy Backend Services
+For each service (`auth-service`, `movie-service`, `booking-service`, `gateway`):
 
-For **each** backend service (`auth-service`, `movie-service`, `booking-service`, `gateway`):
+1. **New → Web Service** → connect repo
+2. Set **Root Directory** to `Cineverse_website/backend/<service-name>`
+3. Set **Runtime** to **Docker**
+4. Add the environment variables from the table above
+5. **Important:** Use the **same `JWT_SECRET` value** for `auth-service` and `gateway`
 
-1. Go to **Render Dashboard → New → Web Service**
-2. Connect your GitHub repo
-3. Configure:
+#### Step 3 — Frontend
 
-| Setting | Value |
-|---------|-------|
-| **Name** | `cineverse-auth` (or movie/booking/gateway) |
-| **Root Directory** | `Cineverse_website/backend/auth-service` |
-| **Runtime** | Docker |
-| **Plan** | Free |
+1. **New → Static Site** → connect repo
+2. **Root Directory:** `Cineverse_website/frontend`
+3. **Build Command:** `npm install && npm run build`
+4. **Publish Directory:** `dist`
+5. Add **Rewrite Rule:** `/*` → `/index.html`
+6. Set `VITE_API_URL` = `https://cineverse-gateway.onrender.com/api`
 
-4. Add **Environment Variables** (see [Environment Variables](#-environment-variables) section)
-5. **Important:** Set `JWT_SECRET` to the **same value** for both auth-service and gateway
-
-#### Step 3: Deploy Frontend
-
-1. Go to **Render Dashboard → New → Static Site**
-2. Connect your GitHub repo
-3. Configure:
-
-| Setting | Value |
-|---------|-------|
-| **Root Directory** | `Cineverse_website/frontend` |
-| **Build Command** | `npm install && npm run build` |
-| **Publish Directory** | `dist` |
-
-4. Add env var: `VITE_API_URL` = `https://your-gateway-name.onrender.com/api`
-5. Add a **Rewrite Rule**: `/*` → `/index.html` (for SPA routing)
-
-#### Step 4: Update Gateway CORS (if needed)
-
-The gateway is pre-configured to accept requests from any `*.onrender.com` subdomain. No changes needed!
-
-### CI/CD Pipeline
-
-The project uses **GitHub Actions** for continuous integration:
-
-```yaml
-# Triggers on push/PR to main branch
-# 1. Checks out code
-# 2. Sets up Node.js 18
-# 3. Installs frontend dependencies
-# 4. Builds production bundle
-# 5. Verifies build output
-# Render auto-deploys on push to main
-```
+> **Free tier note:** Render free services spin down after 15 minutes of inactivity. The first request after idle takes ~30–60 seconds to respond. This is expected.
 
 ### Self-Hosted (Docker Compose)
+
 ```bash
 git clone https://github.com/iamujjwal69/cineverse.git
 cd cineverse/Cineverse_website
@@ -534,59 +421,25 @@ docker-compose up -d
 
 ---
 
-## 🖼️ Screenshots
-
-### 🏠 Home Page
-> Landing page with hero section, feature cards, and CTA
-
-### 🎬 Movie Browsing
-> Browse 100+ movies with search, genre filters, category filters (Hollywood/Bollywood/South Indian), and sorting
-
-### 🎫 3-Step Booking Flow
-> **Step 1:** Select city, theatre & showtime → **Step 2:** Choose seats on interactive map → **Step 3:** Booking confirmation
-
-### 👤 User Dashboard
-> View booking history, manage profile, and track upcoming shows
-
----
-
-## 🧪 Testing
-
-```bash
-# Backend Tests (per service)
-cd Cineverse_website/backend/auth-service    && mvn test
-cd Cineverse_website/backend/movie-service   && mvn test
-cd Cineverse_website/backend/booking-service && mvn test
-
-# Frontend Build Verification
-cd Cineverse_website/frontend && npm run build
-```
-
----
-
 ## 🤝 Contributing
 
-Contributions are welcome! Here's how:
-
-1. **Fork** this repository
-2. **Create** your feature branch: `git checkout -b feature/AmazingFeature`
-3. **Commit** your changes: `git commit -m 'Add some AmazingFeature'`
-4. **Push** to the branch: `git push origin feature/AmazingFeature`
-5. **Open** a Pull Request
+1. Fork this repository
+2. Create your feature branch: `git checkout -b feature/my-feature`
+3. Commit your changes: `git commit -m 'Add my feature'`
+4. Push to the branch: `git push origin feature/my-feature`
+5. Open a Pull Request
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License**.
 
 ---
 
 ## 👨‍💻 Author
 
 **Ujjwal** — [@iamujjwal69](https://github.com/iamujjwal69)
-
----
 
 <div align="center">
 
