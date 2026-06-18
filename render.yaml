@@ -1,17 +1,12 @@
-# Render Infrastructure-as-Code (Blueprint)
-# Deploy all CineVerse services with one click
-# https://render.com/docs/infrastructure-as-code
-
 databases:
   - name: cineverse-postgres
     plan: free
     databaseName: cineverse
     user: cineverse_user
-    region: oregon
 
 services:
   # ─────────────────────────────────────────────
-  # Auth Service (Spring Boot + PostgreSQL)
+  # Auth Service
   # ─────────────────────────────────────────────
   - type: web
     name: cineverse-auth
@@ -24,7 +19,7 @@ services:
       - key: DATABASE_URL
         fromDatabase:
           name: cineverse-postgres
-          property: connectionURI
+          property: connectionString
       - key: DB_USER
         fromDatabase:
           name: cineverse-postgres
@@ -39,7 +34,7 @@ services:
         value: 8081
 
   # ─────────────────────────────────────────────
-  # Movie Service (Spring Boot + MongoDB Atlas)
+  # Movie Service
   # ─────────────────────────────────────────────
   - type: web
     name: cineverse-movies
@@ -50,7 +45,7 @@ services:
     dockerfilePath: ./Dockerfile
     envVars:
       - key: MONGO_URI
-        sync: false  # Set manually — use MongoDB Atlas free tier
+        sync: false
       - key: REDIS_HOST
         value: localhost
       - key: REDIS_PORT
@@ -59,7 +54,7 @@ services:
         value: 8082
 
   # ─────────────────────────────────────────────
-  # Booking Service (Spring Boot + PostgreSQL)
+  # Booking Service
   # ─────────────────────────────────────────────
   - type: web
     name: cineverse-booking
@@ -72,7 +67,7 @@ services:
       - key: DATABASE_URL
         fromDatabase:
           name: cineverse-postgres
-          property: connectionURI
+          property: connectionString
       - key: DB_USER
         fromDatabase:
           name: cineverse-postgres
@@ -93,10 +88,7 @@ services:
         value: 8083
 
   # ─────────────────────────────────────────────
-  # API Gateway (Spring Cloud Gateway)
-  # Render free services communicate via their public HTTPS URLs.
-  # Set AUTH/MOVIE/BOOKING_SERVICE_URL manually in the Render dashboard
-  # to the respective service's external URL after first deploy.
+  # API Gateway
   # ─────────────────────────────────────────────
   - type: web
     name: cineverse-gateway
@@ -107,30 +99,29 @@ services:
     dockerfilePath: ./Dockerfile
     envVars:
       - key: AUTH_SERVICE_URL
-        sync: false   # Set to https://cineverse-auth.onrender.com after first deploy
+        sync: false
       - key: MOVIE_SERVICE_URL
-        sync: false   # Set to https://cineverse-movies.onrender.com after first deploy
+        sync: false
       - key: BOOKING_SERVICE_URL
-        sync: false   # Set to https://cineverse-booking.onrender.com after first deploy
+        sync: false
       - key: JWT_SECRET
-        sync: false   # Must match cineverse-auth JWT_SECRET exactly
+        sync: false
       - key: PORT
         value: 8080
 
   # ─────────────────────────────────────────────
-  # Frontend (React + Vite → Render Static Site)
+  # Frontend — Static Site (no region allowed)
   # ─────────────────────────────────────────────
   - type: web
     name: cineverse-frontend
     plan: free
     runtime: static
-    region: oregon
     rootDir: Cineverse_website/frontend
     buildCommand: npm install && npm run build
     staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
-        sync: false   # Set to https://cineverse-gateway.onrender.com/api after gateway is deployed
+        sync: false
     routes:
       - type: rewrite
         source: /*
