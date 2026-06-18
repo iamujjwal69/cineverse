@@ -2,7 +2,9 @@ package com.cineverse.auth.service;
 
 import com.cineverse.auth.dto.*;
 import com.cineverse.auth.model.User;
+import com.cineverse.auth.model.OtpVerification;
 import com.cineverse.auth.repository.UserRepository;
+import com.cineverse.auth.repository.OtpVerificationRepository;
 import com.cineverse.auth.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,12 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final OtpVerificationRepository otpVerificationRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
@@ -119,5 +123,55 @@ public class AuthService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         return ApiResponse.success(user);
+    }
+
+    @Transactional
+    public ApiResponse<String> sendOtp(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            return ApiResponse.error("Email cannot be empty");
+        }
+
+        if (userRepository.existsByEmail(email)) {
+            return ApiResponse.error("Email already registered");
+        }
+
+        String code = String.format("%06d", new Random().nextInt(999999));
+        otpVerificationRepository.deleteByEmail(email);
+
+        OtpVerification verification = OtpVerification.builder()
+                .email(email)
+                .code(code)
+                .expiryTime(LocalDateTime.now().plusMinutes(5))
+                .build();
+
+        otpVerificationRepository.save(verification);
+        System.out.println("[OTP INFO] Sent OTP verification to " + email + ", code: " + code);
+
+        return ApiResponse.success("Verification OTP sent. Code: " + code, null);
+    }
+
+    @Transactional
+    public ApiResponse<String> verifyOtp(String email, String code) {
+        if (email == null || code == null) {
+            return ApiResponse.error("Email and OTP code are required");
+        }
+
+        OtpVerification verification = otpVerificationRepository.findTopByEmailOrderByExpiryTimeDesc(email)
+                .orElse(null);
+
+        if (verification == null) {
+            return ApiResponse.error("No OTP request found for this email");
+        }
+
+        if (verification.getExpiryTime().isBefore(LocalDateTime.now())) {
+            return ApiResponse.error("OTP has expired. Please request a new one.");
+        }
+
+        if (!verification.getCode().equals(code)) {
+            return ApiResponse.error("Invalid verification code");
+        }
+
+        otpVerificationRepository.deleteByEmail(email);
+        return ApiResponse.success("Email verified successfully", null);
     }
 }

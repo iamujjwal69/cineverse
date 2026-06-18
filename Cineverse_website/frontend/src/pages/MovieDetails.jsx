@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import movieService from '../services/movieService';
+import { getMockMovieById } from '../services/mockMovies';
 import { FaStar, FaClock, FaCalendar, FaPlay } from 'react-icons/fa';
 import '../styles/MovieDetails.css';
 
@@ -20,19 +21,12 @@ const MovieDetails = () => {
     } catch (error) {
       console.error('Failed to fetch movie:', error);
       // Mock data fallback
-      setMovie({
-        id,
-        title: 'The Matrix',
-        genre: 'Sci-Fi',
-        rating: 4.5,
-        duration: 136,
-        releaseYear: 1999,
-        language: 'English',
-        description: 'A computer hacker learns about the true nature of reality and his role in the war against its controllers.',
-        director: 'Lana Wachowski, Lilly Wachowski',
-        cast: 'Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss',
-        posterUrl: ''
-      });
+      const mockMovie = getMockMovieById(id);
+      if (mockMovie) {
+        setMovie(mockMovie);
+      } else {
+        setMovie(null);
+      }
     } finally {
       setLoading(false);
     }
@@ -58,7 +52,16 @@ const MovieDetails = () => {
 
   return (
     <div className="movie-details-page">
-      <div className="movie-backdrop">
+      <div 
+        className="movie-backdrop" 
+        style={{ 
+          backgroundImage: `url(${movie.backdropUrl || movie.posterUrl})`, 
+          backgroundSize: 'cover', 
+          backgroundPosition: 'center 20%', 
+          opacity: 0.35,
+          filter: 'blur(4px)'
+        }}
+      >
         <div className="backdrop-overlay"></div>
       </div>
       
@@ -80,7 +83,7 @@ const MovieDetails = () => {
             <div className="movie-meta-info">
               <span className="genre-badge">{movie.genre}</span>
               <span className="rating-badge">
-                <FaStar /> {movie.rating}
+                <FaStar /> {movie.rating ? `${movie.rating}/10` : 'N/A'}
               </span>
               <span className="meta-item">
                 <FaClock /> {movie.duration} mins

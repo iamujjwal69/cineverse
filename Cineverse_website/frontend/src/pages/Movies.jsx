@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import movieService from '../services/movieService';
+import { queryMockMovies } from '../services/mockMovies';
 import { FaStar, FaSearch } from 'react-icons/fa';
 import '../styles/Movies.css';
 
@@ -10,9 +11,10 @@ const Movies = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState({
     genre: '',
+    category: '',
     sortBy: 'title',
     page: 0,
-    size: 12
+    size: 120 // Display all 100+ movies on one page
   });
 
   useEffect(() => {
@@ -27,7 +29,8 @@ const Movies = () => {
     } catch (error) {
       console.error('Failed to fetch movies:', error);
       // Use mock data if API fails
-      setMovies(getMockMovies());
+      const result = queryMockMovies(searchQuery, filters);
+      setMovies(result.content);
     } finally {
       setLoading(false);
     }
@@ -41,20 +44,14 @@ const Movies = () => {
         setMovies(response.data.data?.content || response.data.data || []);
       } catch (error) {
         console.error('Search failed:', error);
+        // Search mock movies fallback
+        const result = queryMockMovies(searchQuery, filters);
+        setMovies(result.content);
       }
     } else {
       fetchMovies();
     }
   };
-
-  const getMockMovies = () => [
-    { id: 1, title: 'The Matrix', genre: 'Sci-Fi', rating: 4.5, duration: 136, posterUrl: '', releaseYear: 1999 },
-    { id: 2, title: 'Inception', genre: 'Thriller', rating: 4.8, duration: 148, posterUrl: '', releaseYear: 2010 },
-    { id: 3, title: 'The Dark Knight', genre: 'Action', rating: 4.9, duration: 152, posterUrl: '', releaseYear: 2008 },
-    { id: 4, title: 'Interstellar', genre: 'Sci-Fi', rating: 4.7, duration: 169, posterUrl: '', releaseYear: 2014 },
-    { id: 5, title: 'Pulp Fiction', genre: 'Drama', rating: 4.6, duration: 154, posterUrl: '', releaseYear: 1994 },
-    { id: 6, title: 'Fight Club', genre: 'Drama', rating: 4.7, duration: 139, posterUrl: '', releaseYear: 1999 }
-  ];
 
   return (
     <div className="movies-page">
@@ -69,7 +66,7 @@ const Movies = () => {
             <FaSearch />
             <input
               type="text"
-              placeholder="Search for movies..."
+              placeholder="Search by title, genre, category, cast, director..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -78,8 +75,19 @@ const Movies = () => {
 
           <div className="filters">
             <select
+              value={filters.category}
+              onChange={(e) => setFilters({ ...filters, category: e.target.value, page: 0 })}
+              className="filter-select"
+            >
+              <option value="">All Categories</option>
+              <option value="Hollywood">Hollywood</option>
+              <option value="Bollywood">Bollywood</option>
+              <option value="South Indian">South Indian</option>
+            </select>
+
+            <select
               value={filters.genre}
-              onChange={(e) => setFilters({ ...filters, genre: e.target.value })}
+              onChange={(e) => setFilters({ ...filters, genre: e.target.value, page: 0 })}
               className="filter-select"
             >
               <option value="">All Genres</option>
@@ -89,6 +97,9 @@ const Movies = () => {
               <option value="Sci-Fi">Sci-Fi</option>
               <option value="Thriller">Thriller</option>
               <option value="Horror">Horror</option>
+              <option value="Romance">Romance</option>
+              <option value="Fantasy">Fantasy</option>
+              <option value="Animation">Animation</option>
             </select>
 
             <select
@@ -96,9 +107,9 @@ const Movies = () => {
               onChange={(e) => setFilters({ ...filters, sortBy: e.target.value })}
               className="filter-select"
             >
-              <option value="title">Title</option>
-              <option value="rating">Rating</option>
-              <option value="releaseYear">Release Year</option>
+              <option value="title">Title (A-Z)</option>
+              <option value="rating">Rating (Highest first)</option>
+              <option value="releaseYear">Release Year (Newest first)</option>
             </select>
           </div>
         </div>
@@ -106,33 +117,41 @@ const Movies = () => {
         {loading ? (
           <div className="spinner"></div>
         ) : (
-          <div className="movies-grid">
-            {movies.map((movie) => (
-              <Link to={`/movies/${movie.id}`} key={movie.id} className="movie-card glass">
-                <div className="movie-poster">
-                  {movie.posterUrl ? (
-                    <img src={movie.posterUrl} alt={movie.title} />
-                  ) : (
-                    <div className="movie-placeholder">
-                      <span>{movie.title[0]}</span>
+          <div>
+            <div className="movies-count-info">
+              Showing {movies.length} movies
+            </div>
+            <div className="movies-grid">
+              {movies.map((movie) => (
+                <Link to={`/movies/${movie.id}`} key={movie.id} className="movie-card glass">
+                  <div className="movie-poster">
+                    {movie.posterUrl ? (
+                      <img src={movie.posterUrl} alt={movie.title} loading="lazy" />
+                    ) : (
+                      <div className="movie-placeholder">
+                        <span>{movie.title[0]}</span>
+                      </div>
+                    )}
+                    <div className="movie-overlay">
+                      <button className="btn btn-primary">View Details</button>
                     </div>
-                  )}
-                  <div className="movie-overlay">
-                    <button className="btn btn-primary">View Details</button>
                   </div>
-                </div>
-                <div className="movie-info">
-                  <h3>{movie.title}</h3>
-                  <div className="movie-meta">
-                    <span className="movie-genre">{movie.genre}</span>
-                    <span className="movie-rating">
-                      <FaStar /> {movie.rating || 'N/A'}
-                    </span>
+                  <div className="movie-info">
+                    <h3>{movie.title}</h3>
+                    <div className="movie-meta">
+                      <span className="movie-genre">{movie.genre}</span>
+                      <span className="movie-rating">
+                        <FaStar /> {movie.rating ? `${movie.rating}/10` : 'N/A'}
+                      </span>
+                    </div>
+                    <div className="movie-card-footer">
+                      <span className="movie-year">{movie.releaseYear}</span>
+                      {movie.category && <span className="movie-category-badge">{movie.category}</span>}
+                    </div>
                   </div>
-                  <p className="movie-year">{movie.releaseYear}</p>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              ))}
+            </div>
           </div>
         )}
       </div>

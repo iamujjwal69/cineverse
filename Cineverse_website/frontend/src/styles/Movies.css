@@ -158,23 +158,47 @@
 
 .movie-genre {
   padding: 4px 12px;
-  background-color: rgba(229, 9, 20, 0.2);
+  background-color: rgba(248, 68, 100, 0.08);
+  color: var(--primary-color);
   border-radius: 12px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .movie-rating {
   display: flex;
   align-items: center;
   gap: 5px;
-  color: #ffd700;
+  color: #ff9f00;
   font-weight: 600;
 }
 
 .movie-year {
   color: var(--text-secondary);
   font-size: 14px;
+}
+
+.movies-count-info {
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.movie-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.movie-category-badge {
+  padding: 2px 8px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-secondary);
 }
 
 @media (max-width: 768px) {

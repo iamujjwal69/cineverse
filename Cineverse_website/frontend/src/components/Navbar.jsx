@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { FaUser, FaBars, FaTimes } from 'react-icons/fa';
+import { FaUser, FaBars, FaTimes, FaMapMarkerAlt } from 'react-icons/fa';
 import '../styles/Navbar.css';
 
 const Navbar = () => {
   const { user, logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [selectedCity, setSelectedCity] = useState(
+    localStorage.getItem('selectedCity') || 'Chandigarh'
+  );
+
+  const handleCityChange = (e) => {
+    const newCity = e.target.value;
+    setSelectedCity(newCity);
+    localStorage.setItem('selectedCity', newCity);
+    window.dispatchEvent(new CustomEvent('cityChanged', { detail: newCity }));
+  };
 
   const handleLogout = () => {
     logout();
@@ -22,9 +32,25 @@ const Navbar = () => {
   return (
     <nav className="navbar glass">
       <div className="navbar-container">
-        <Link to="/" className="navbar-logo" onClick={() => setMenuOpen(false)}>
-          <span className="logo-text">CineVerse</span>
-        </Link>
+        <div className="navbar-left">
+          <Link to="/" className="navbar-logo" onClick={() => setMenuOpen(false)}>
+            <span className="logo-text">TicketShow</span>
+          </Link>
+
+          <div className="location-selector">
+            <FaMapMarkerAlt className="location-icon" />
+            <select 
+              value={selectedCity} 
+              onChange={handleCityChange} 
+              className="location-select"
+            >
+              <option value="Chandigarh">Chandigarh</option>
+              <option value="Delhi NCR">Delhi NCR</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Bengaluru">Bengaluru</option>
+            </select>
+          </div>
+        </div>
 
         <button className="menu-toggle" onClick={toggleMenu}>
           {menuOpen ? <FaTimes /> : <FaBars />}

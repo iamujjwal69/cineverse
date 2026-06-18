@@ -10,7 +10,7 @@ const Home = () => {
       <section className="hero">
         <div className="hero-overlay"></div>
         <div className="hero-content">
-          <h1 className="hero-title">Welcome to CineVerse</h1>
+          <h1 className="hero-title">Welcome to TicketShow</h1>
           <p className="hero-subtitle">Your Gateway to Unlimited Entertainment</p>
           <div className="hero-buttons">
             <Link to="/movies" className="btn btn-primary">
@@ -25,7 +25,7 @@ const Home = () => {
 
       {/* Features Section */}
       <section className="features container">
-        <h2 className="section-title">Why Choose CineVerse?</h2>
+        <h2 className="section-title">Why Choose TicketShow?</h2>
         <div className="features-grid">
           <div className="feature-card glass">
             <FaTicketAlt className="feature-icon" />

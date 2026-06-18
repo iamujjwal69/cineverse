@@ -66,7 +66,7 @@ const Signup = () => {
     <div className="auth-page">
       <div className="auth-container">
         <div className="auth-card glass">
-          <h1 className="auth-title">Join CineVerse</h1>
+          <h1 className="auth-title">Join TicketShow</h1>
           <p className="auth-subtitle">Create your account to get started</p>
 
           {error && <div className="error-message">{error}</div>}
