@@ -4,7 +4,7 @@
 
 ### A Full-Stack Movie Booking Application with Microservices Architecture
 
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-CineVerse-E50914?style=for-the-badge)](https://cineverse-ipsj.onrender.com)
+[![Deploy to Render](https://img.shields.io/badge/Deploy_to-Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://render.com/deploy?repo=https://github.com/iamujjwal69/cineverse)
 [![GitHub](https://img.shields.io/badge/GitHub-iamujjwal69-181717?style=for-the-badge&logo=github)](https://github.com/iamujjwal69/cineverse)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
 ![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)
@@ -24,15 +24,17 @@
 
 ## 🌐 Live Demo
 
-> ### 🔗 **[Click here to visit CineVerse Live →](https://cineverse-ipsj.onrender.com)**
+> ### 🚀 **[Deploy your own CineVerse on Render →](https://render.com/deploy?repo=https://github.com/iamujjwal69/cineverse)**
 
-| Service | Live URL | Status |
-|---------|----------|--------|
-| 🎬 **Frontend** | [cineverse-ipsj.onrender.com](https://cineverse-ipsj.onrender.com) | ✅ Live |
-| 🔀 **API Gateway** | [cineverse-gateway-cv6o.onrender.com](https://cineverse-gateway-cv6o.onrender.com) | ✅ Live |
-| 🔐 **Auth Service** | [cineverse-auth-2554.onrender.com](https://cineverse-auth-2554.onrender.com) | ✅ Live |
+| Feature | Demo Mode (No Backend Needed) |
+|---------|-------------------------------|
+| 🎬 **100+ Movies** | Full catalog with posters, ratings, and filters |
+| 🔐 **Login/Register** | Works with any email/password |
+| 🎫 **Book Tickets** | Complete 3-step booking flow |
+| 💺 **Seat Selection** | Interactive seat map |
+| 📊 **Dashboard** | Booking history stored locally |
 
-> **💡 Tip:** If the backend services are sleeping (free tier), the app automatically falls back to **demo mode** with 100+ mock movies. Use any email/password to login.
+> **💡 Run locally in 30 seconds:** `cd Cineverse_website/frontend && npm install && npm run dev` — the app works in **demo mode** without any backend!
 
 ---
 
@@ -447,15 +449,65 @@ VITE_API_URL=http://localhost:8080/api
 
 ## 🌐 Deployment
 
-### Live Deployment (Render)
+### One-Click Deploy on Render (Blueprint)
 
-The project is deployed on **Render** with the following services:
+This project includes a `render.yaml` file for **Infrastructure-as-Code** deployment:
 
-| Service | URL |
-|---------|-----|
-| 🌐 **Frontend** | [cineverse-ipsj.onrender.com](https://cineverse-ipsj.onrender.com) |
-| 🔀 **API Gateway** | [cineverse-gateway-cv6o.onrender.com](https://cineverse-gateway-cv6o.onrender.com) |
-| 🔐 **Auth Service** | [cineverse-auth-2554.onrender.com](https://cineverse-auth-2554.onrender.com) |
+1. **Sign up** at [render.com](https://render.com) (free tier available)
+2. Go to **Dashboard → New → Blueprint**
+3. Connect your GitHub repo: `iamujjwal69/cineverse`
+4. Render will auto-detect `render.yaml` and create all services
+5. Click **Apply** — done! 🎉
+
+### Manual Deployment on Render (Step-by-Step)
+
+If you prefer setting up each service individually:
+
+#### Step 1: Create Free Databases
+
+| Database | Provider | Free Tier |
+|----------|----------|-----------|
+| **PostgreSQL** | [Render PostgreSQL](https://render.com/docs/databases) | Free 256MB |
+| **MongoDB** | [MongoDB Atlas](https://www.mongodb.com/atlas) | Free M0 cluster |
+
+> Redis and RabbitMQ are optional — the app works without them in demo mode.
+
+#### Step 2: Deploy Backend Services
+
+For **each** backend service (`auth-service`, `movie-service`, `booking-service`, `gateway`):
+
+1. Go to **Render Dashboard → New → Web Service**
+2. Connect your GitHub repo
+3. Configure:
+
+| Setting | Value |
+|---------|-------|
+| **Name** | `cineverse-auth` (or movie/booking/gateway) |
+| **Root Directory** | `Cineverse_website/backend/auth-service` |
+| **Runtime** | Docker |
+| **Plan** | Free |
+
+4. Add **Environment Variables** (see [Environment Variables](#-environment-variables) section)
+5. **Important:** Set `JWT_SECRET` to the **same value** for both auth-service and gateway
+
+#### Step 3: Deploy Frontend
+
+1. Go to **Render Dashboard → New → Static Site**
+2. Connect your GitHub repo
+3. Configure:
+
+| Setting | Value |
+|---------|-------|
+| **Root Directory** | `Cineverse_website/frontend` |
+| **Build Command** | `npm install && npm run build` |
+| **Publish Directory** | `dist` |
+
+4. Add env var: `VITE_API_URL` = `https://your-gateway-name.onrender.com/api`
+5. Add a **Rewrite Rule**: `/*` → `/index.html` (for SPA routing)
+
+#### Step 4: Update Gateway CORS (if needed)
+
+The gateway is pre-configured to accept requests from any `*.onrender.com` subdomain. No changes needed!
 
 ### CI/CD Pipeline
 
@@ -465,26 +517,19 @@ The project uses **GitHub Actions** for continuous integration:
 # Triggers on push/PR to main branch
 # 1. Checks out code
 # 2. Sets up Node.js 18
-# 3. Installs dependencies
+# 3. Installs frontend dependencies
 # 4. Builds production bundle
 # 5. Verifies build output
 # Render auto-deploys on push to main
 ```
 
-### Deploy Your Own Instance
-
-#### On Render (Free Tier)
-1. Fork this repository
-2. Create a new **Web Service** for each backend service
-3. Create a new **Static Site** for the frontend
-4. Set the environment variables listed above
-5. Render will auto-deploy on every push to `main`
-
-#### On Docker (Self-Hosted)
+### Self-Hosted (Docker Compose)
 ```bash
 git clone https://github.com/iamujjwal69/cineverse.git
 cd cineverse/Cineverse_website
 docker-compose up -d
+# Frontend → http://localhost:3000
+# Gateway  → http://localhost:8080
 ```
 
 ---

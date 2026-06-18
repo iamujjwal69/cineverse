@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: ${PORT:8080}
 
 spring:
   application:
@@ -11,9 +11,9 @@ spring:
         add-to-simple-url-handler-mapping: true
         corsConfigurations:
           '[/**]':
-            allowedOrigins:
-              - "https://cineverse-ipsj.onrender.com"
-              - "http://localhost:3000"
+            allowedOriginPatterns:
+              - "https://*.onrender.com"
+              - "http://localhost:*"
             allowedMethods:
               - GET
               - POST
