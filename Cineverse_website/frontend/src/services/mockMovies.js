@@ -1,1404 +1,942 @@
-// Movie database for CineVerse — all posters use TMDB image CDN for reliability
-// Base URL: https://image.tmdb.org/t/p/w500<poster_path>
+// Movie database for CineVerse
+// Posters use m.media-amazon.com (IMDb CDN) — no CORS/CSP issues
 
 export const mockMovies = [
   {
-    "id": "m1",
-    "title": "Avengers: Endgame",
+    "id": "m1", "title": "Avengers: Endgame",
     "genre": "Action", "subGenre": "Sci-Fi", "category": "Hollywood",
     "rating": 9.8, "duration": 181, "releaseYear": 2019, "language": "English",
     "director": "Anthony Russo, Joe Russo",
     "cast": "Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth",
-    "description": "After the devastating events of Avengers: Infinity War, the universe is in ruins. The Avengers assemble once more to reverse Thanos' actions and restore balance.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg"
+    "description": "After the devastating events of Infinity War, the Avengers assemble once more to reverse Thanos' actions and restore balance to the universe.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SX300.jpg"
   },
   {
-    "id": "m2",
-    "title": "Iron Man",
+    "id": "m2", "title": "Iron Man",
     "genre": "Action", "subGenre": "Sci-Fi", "category": "Hollywood",
     "rating": 9.6, "duration": 126, "releaseYear": 2008, "language": "English",
     "director": "Jon Favreau",
     "cast": "Robert Downey Jr., Gwyneth Paltrow, Terrence Howard, Jeff Bridges",
-    "description": "After being held captive in an Afghan cave, billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBF8l6nOQi.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/cyecB7godJ6kNHGONFjUyVN9OX5.jpg"
+    "description": "After being held captive, billionaire engineer Tony Stark creates a weaponized suit of armor to fight evil.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_SX300.jpg"
   },
   {
-    "id": "m3",
-    "title": "Spider-Man: No Way Home",
+    "id": "m3", "title": "Spider-Man: No Way Home",
     "genre": "Action", "subGenre": "Fantasy", "category": "Hollywood",
     "rating": 9.6, "duration": 148, "releaseYear": 2021, "language": "English",
     "director": "Jon Watts",
     "cast": "Tom Holland, Zendaya, Benedict Cumberbatch, Jacob Batalon",
-    "description": "With Spider-Man's identity revealed, Peter asks Doctor Strange for help. When a spell goes wrong, dangerous foes from other worlds start to appear.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/iQFcwSGbZXMkeyKrxbPnwnRo5fl.jpg"
+    "description": "With Spider-Man's identity revealed, Peter asks Doctor Strange for help. When a spell goes wrong, dangerous foes from other worlds appear.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BZWMyYzFjYTYtNTRjYi00OGExLWE2YzgtOGRmYjAxZTU3NzBiXkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_SX300.jpg"
   },
   {
-    "id": "m4",
-    "title": "Black Panther",
+    "id": "m4", "title": "Black Panther",
     "genre": "Action", "subGenre": "Drama", "category": "Hollywood",
     "rating": 9.4, "duration": 134, "releaseYear": 2018, "language": "English",
     "director": "Ryan Coogler",
     "cast": "Chadwick Boseman, Michael B. Jordan, Lupita Nyong'o, Danai Gurira",
-    "description": "T'Challa, heir to the hidden kingdom of Wakanda, must step forward to lead his people into a new future.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/uxzzxijgPIY7slzFvMotPv8wjKA.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/6ELJEzQJ3Y45HczvreC3dg0GV5R.jpg"
+    "description": "T'Challa, heir to Wakanda, must step forward to lead his people into a new future.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMTg1MTY2MjYzNV5BMl5BanBnXkFtZTgwMTc4NTMwNDI@._V1_SX300.jpg"
   },
   {
-    "id": "m5",
-    "title": "Thor: Ragnarok",
+    "id": "m5", "title": "Thor: Ragnarok",
     "genre": "Comedy", "subGenre": "Action", "category": "Hollywood",
     "rating": 9.4, "duration": 130, "releaseYear": 2017, "language": "English",
     "director": "Taika Waititi",
     "cast": "Chris Hemsworth, Tom Hiddleston, Cate Blanchett, Mark Ruffalo",
-    "description": "Imprisoned on the planet Sakaar, Thor must race against time to return to Asgard and stop Ragnarok.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/rzRwTcFvttcN1ZpX2xv4j3tSdJu.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/kaIfm5ryEOwYg8mLbq8HkPuM1Fo.jpg"
+    "description": "Imprisoned on Sakaar, Thor must race to return to Asgard and stop Ragnarok.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMjMyNDkzMzI1OF5BMl5BanBnXkFtZTgwODcxOTg5MjI@._V1_SX300.jpg"
   },
   {
-    "id": "m6",
-    "title": "Doctor Strange",
+    "id": "m6", "title": "Doctor Strange",
     "genre": "Fantasy", "subGenre": "Sci-Fi", "category": "Hollywood",
     "rating": 9.2, "duration": 115, "releaseYear": 2016, "language": "English",
     "director": "Scott Derrickson",
     "cast": "Benedict Cumberbatch, Chiwetel Ejiofor, Rachel McAdams, Benedict Wong",
-    "description": "While on a journey of physical and spiritual healing, a brilliant neurosurgeon is drawn into the world of the mystic arts.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/uGBVqwZ7oDU36Go2HdWtNeDTMCo.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/jthDEAf5SKGJWdYHuVQlJgKFkvo.jpg"
+    "description": "A brilliant neurosurgeon is drawn into the world of the mystic arts.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNjgwNzAzNjk1Nl5BMl5BanBnXkFtZTgwMzQ2NjI1OTE@._V1_SX300.jpg"
   },
   {
-    "id": "m7",
-    "title": "Captain America: The Winter Soldier",
+    "id": "m7", "title": "Captain America: The Winter Soldier",
     "genre": "Action", "subGenre": "Thriller", "category": "Hollywood",
     "rating": 9.6, "duration": 136, "releaseYear": 2014, "language": "English",
     "director": "Anthony Russo, Joe Russo",
     "cast": "Chris Evans, Samuel L. Jackson, Scarlett Johansson, Robert Redford",
-    "description": "Steve Rogers teams up with Black Widow to battle a new threat from history: an assassin known as the Winter Soldier.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/5TQ6JGLiBNdPmk3NnNnYBpT9nKp.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/z4OSTbZoalPoKPlU4hIJQPzOPNi.jpg"
+    "description": "Steve Rogers teams with Black Widow to battle the mysterious Winter Soldier.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMzA2NDkwODAwM15BMl5BanBnXkFtZTgwODk5MTgzMTE@._V1_SX300.jpg"
   },
   {
-    "id": "m8",
-    "title": "Guardians of the Galaxy",
+    "id": "m8", "title": "Guardians of the Galaxy",
     "genre": "Sci-Fi", "subGenre": "Comedy", "category": "Hollywood",
     "rating": 9.4, "duration": 121, "releaseYear": 2014, "language": "English",
     "director": "James Gunn",
     "cast": "Chris Pratt, Zoe Saldana, Dave Bautista, Vin Diesel",
-    "description": "A group of intergalactic criminals must pull together to stop a fanatical warrior with plans to purge the universe.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/bHarw8xrmQeqf3t8HpuMY7zoK4x.jpg"
+    "description": "A group of intergalactic criminals must pull together to stop a fanatical warrior.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMTAwMjU5OTgxNjZeQTJeQWpwZ15BbWU4MDUxNDYxNTMx._V1_SX300.jpg"
   },
   {
-    "id": "m9",
-    "title": "Avengers: Infinity War",
+    "id": "m9", "title": "Avengers: Infinity War",
     "genre": "Action", "subGenre": "Sci-Fi", "category": "Hollywood",
     "rating": 9.8, "duration": 149, "releaseYear": 2018, "language": "English",
     "director": "Anthony Russo, Joe Russo",
     "cast": "Robert Downey Jr., Chris Hemsworth, Mark Ruffalo, Chris Evans",
-    "description": "The Avengers and their allies must be willing to sacrifice all to defeat the powerful Thanos.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/lmZFxXgJE3vgrciwuDib0N9CfwD.jpg"
+    "description": "The Avengers must sacrifice all to defeat the powerful Thanos.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_SX300.jpg"
   },
   {
-    "id": "m10",
-    "title": "Deadpool",
+    "id": "m10", "title": "Deadpool",
     "genre": "Comedy", "subGenre": "Action", "category": "Hollywood",
     "rating": 9.4, "duration": 108, "releaseYear": 2016, "language": "English",
     "director": "Tim Miller",
     "cast": "Ryan Reynolds, Morena Baccarin, T.J. Miller, Ed Skrein",
-    "description": "A wisecracking mercenary undergoes a rogue experiment that leaves him with accelerated healing powers.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/inVq3FRqcYIRl2la8iZikYYxFNR.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/n1y094tVDFATSzkTnFxoGZ1qNsG.jpg"
+    "description": "A wisecracking mercenary gets accelerated healing powers and seeks revenge.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BYzE5MjY1ZDgtMTkyNC00MTMyLTJhMTYtOTU1ZmQ1YzI0OWNhXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"
   },
   {
-    "id": "m11",
-    "title": "Captain America: Civil War",
+    "id": "m11", "title": "Captain America: Civil War",
     "genre": "Action", "subGenre": "Sci-Fi", "category": "Hollywood",
     "rating": 9.4, "duration": 147, "releaseYear": 2016, "language": "English",
     "director": "Anthony Russo, Joe Russo",
     "cast": "Chris Evans, Robert Downey Jr., Scarlett Johansson, Sebastian Stan",
-    "description": "Political involvement in the Avengers' affairs causes a rift between Captain America and Iron Man.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/rAGiXaUfDiyBljQEwucbVAoNJOJ.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/m5O3SZvQ6EgD5XXXLPIP67ckB4H.jpg"
+    "description": "Political involvement causes a rift between Captain America and Iron Man.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMjQ0MTgyNjAxMV5BMl5BanBnXkFtZTgwNjUzMDkxODE@._V1_SX300.jpg"
   },
   {
-    "id": "m12",
-    "title": "Spider-Man: Into the Spider-Verse",
+    "id": "m12", "title": "Spider-Man: Into the Spider-Verse",
     "genre": "Animation", "subGenre": "Action", "category": "Hollywood",
     "rating": 9.8, "duration": 117, "releaseYear": 2018, "language": "English",
     "director": "Bob Persichetti, Peter Ramsey, Rodney Rothman",
     "cast": "Shameik Moore, Jake Johnson, Hailee Steinfeld, Mahershala Ali",
-    "description": "Teen Miles Morales becomes Spider-Man and must join five spider-powered individuals to stop a threat for all realities.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/9xeEGUZjgiKlI69jwIOi0hjKUIk.jpg"
+    "description": "Teen Miles Morales becomes Spider-Man and joins five spider-powered individuals to stop a multiversal threat.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_SX300.jpg"
   },
   {
-    "id": "m13",
-    "title": "Spider-Man: Across the Spider-Verse",
+    "id": "m13", "title": "Spider-Man: Across the Spider-Verse",
     "genre": "Animation", "subGenre": "Action", "category": "Hollywood",
     "rating": 9.8, "duration": 140, "releaseYear": 2023, "language": "English",
     "director": "Joaquim Dos Santos, Kemp Powers, Justin K. Thompson",
     "cast": "Shameik Moore, Hailee Steinfeld, Oscar Isaac, Jake Johnson",
-    "description": "Miles Morales catapults across the Multiverse, where he encounters a team of Spider-People.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/4HodYYKEIsGOdinkGi2Ucz6X9i0.jpg"
+    "description": "Miles Morales catapults across the Multiverse and must redefine what it means to be a hero.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMzI0NmVkMzEtYmM4Yy00NTY5LTgzYjEtNGFjMTM3YjI3NWFmXkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_SX300.jpg"
   },
   {
-    "id": "m14",
-    "title": "Shang-Chi and the Legend of the Ten Rings",
+    "id": "m14", "title": "Shang-Chi and the Legend of the Ten Rings",
     "genre": "Action", "subGenre": "Fantasy", "category": "Hollywood",
     "rating": 9.2, "duration": 132, "releaseYear": 2021, "language": "English",
     "director": "Destin Daniel Cretton",
     "cast": "Simu Liu, Awkwafina, Tony Leung Chiu-wai, Ben Kingsley",
     "description": "Shang-Chi is forced to confront his past after being drawn into the Ten Rings organization.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/1BIoJGKbXjdFDAqUEiA2VHqkK1Z.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/cinER0ESG0eJ49kXlExM0MEWGxW.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNTliYjlkNDQtMjFlMS00NjgwLWZmNjMtYjViMWRkYjg1NzhhXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg"
   },
   {
-    "id": "m15",
-    "title": "Deadpool & Wolverine",
+    "id": "m15", "title": "Deadpool & Wolverine",
     "genre": "Action", "subGenre": "Comedy", "category": "Hollywood",
     "rating": 9.6, "duration": 127, "releaseYear": 2024, "language": "English",
     "director": "Shawn Levy",
     "cast": "Ryan Reynolds, Hugh Jackman, Emma Corrin, Matthew Macfadyen",
-    "description": "Deadpool is recruited by the TVA and teamed up with a reluctant Wolverine from another timeline.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/yDHYTfA3R0jFYba16jBB1ef8oIt.jpg"
+    "description": "Deadpool is recruited by the TVA and reluctantly teamed with Wolverine from another timeline.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BZGFiZmYxNGMtMjZhOS00MjhhLTg3Y2UtMTA3MTc3YzE3NWE3XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg"
   },
   {
-    "id": "m16",
-    "title": "Doctor Strange in the Multiverse of Madness",
+    "id": "m16", "title": "Doctor Strange in the Multiverse of Madness",
     "genre": "Fantasy", "subGenre": "Horror", "category": "Hollywood",
     "rating": 8.8, "duration": 126, "releaseYear": 2022, "language": "English",
     "director": "Sam Raimi",
     "cast": "Benedict Cumberbatch, Elizabeth Olsen, Chiwetel Ejiofor, Benedict Wong",
     "description": "Doctor Strange teams up with a mysterious teenage girl who can travel across multiverses.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/9Gtg2DzBhmYamXBS1hKAhiwbBKS.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/wcKFYIiVDvRURrzglV9bOK4WHes.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNWM0ZDdiNzItNTc0Ny00MzQwLTg2NWQtM2Q4MDRjNTg1ZGUyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg"
   },
   {
-    "id": "m17",
-    "title": "Logan",
+    "id": "m17", "title": "Logan",
     "genre": "Action", "subGenre": "Drama", "category": "Hollywood",
     "rating": 9.6, "duration": 137, "releaseYear": 2017, "language": "English",
     "director": "James Mangold",
     "cast": "Hugh Jackman, Patrick Stewart, Dafne Keen, Boyd Holbrook",
     "description": "In a future where mutants are nearly extinct, a weary Logan cares for an ailing Professor X.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/fnbjcRDYn6YviCcePDnGdyAkYsB.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/x5uBuA7rwZZsFHNTLGQCTmCfQ03.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BYzc5MTU4N2EtYTkyMi00NjdhLTg3NWQtYTU2ZjgwZTY2MjdlXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg"
   },
   {
-    "id": "m18",
-    "title": "Iron Man 2",
+    "id": "m18", "title": "Iron Man 2",
     "genre": "Action", "subGenre": "Sci-Fi", "category": "Hollywood",
     "rating": 8.6, "duration": 124, "releaseYear": 2010, "language": "English",
     "director": "Jon Favreau",
     "cast": "Robert Downey Jr., Gwyneth Paltrow, Don Cheadle, Mickey Rourke",
-    "description": "With the world aware of his identity as Iron Man, Tony Stark must confront both his declining health and a vengeful madman.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/6WBeq4fCfn7AN33GmxqCd0kkXJN.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/6tcT1wBEtBGPjzMmGbEFiMxpMGD.jpg"
+    "description": "Tony Stark must confront his declining health and a vengeful madman with ties to his father's legacy.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BZGVkNDAyM2EtYzYxYy00ZWUxLTgwMjgtY2VmODE5OTk3N2M5XkEyXkFqcGdeQXVyNTMzODI3ODY@._V1_SX300.jpg"
   },
   {
-    "id": "m19",
-    "title": "The Avengers",
+    "id": "m19", "title": "The Avengers",
     "genre": "Action", "subGenre": "Sci-Fi", "category": "Hollywood",
     "rating": 9.6, "duration": 143, "releaseYear": 2012, "language": "English",
     "director": "Joss Whedon",
     "cast": "Robert Downey Jr., Chris Evans, Scarlett Johansson, Chris Hemsworth",
-    "description": "Earth's mightiest heroes must come together to stop the mischievous Loki and his alien army.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/kwBpWUNHkpHDyJlLx2SUQ9DQRXO.jpg"
+    "description": "Earth's mightiest heroes must come together to stop Loki and his alien army.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGM2NTg1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg"
   },
   {
-    "id": "m20",
-    "title": "Guardians of the Galaxy Vol. 3",
+    "id": "m20", "title": "Guardians of the Galaxy Vol. 3",
     "genre": "Sci-Fi", "subGenre": "Action", "category": "Hollywood",
     "rating": 9.4, "duration": 150, "releaseYear": 2023, "language": "English",
     "director": "James Gunn",
     "cast": "Chris Pratt, Chukwudi Iwuji, Bradley Cooper, Pom Klementieff",
-    "description": "Still reeling from the loss of Gamora, Peter Quill rallies his team to defend the universe.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/5YZbUmjbMa3ClvSW1Wj3D6XGkVA.jpg"
+    "description": "Peter Quill rallies his team to defend the universe and one of their own.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMDgwODNmMGItMDcyYy00NWZmLTg4YWUtZTdjYjI2ZjZhZGFjXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg"
   },
   {
-    "id": "m21",
-    "title": "Thor: Love and Thunder",
+    "id": "m21", "title": "Thor: Love and Thunder",
     "genre": "Action", "subGenre": "Comedy", "category": "Hollywood",
     "rating": 8.2, "duration": 118, "releaseYear": 2022, "language": "English",
     "director": "Taika Waititi",
     "cast": "Chris Hemsworth, Natalie Portman, Christian Bale, Tessa Thompson",
     "description": "Thor enlists help to fight Gorr the God Butcher, who intends to make gods extinct.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/pIkRyD18kl4FhoCNQuWxWu5cBLM.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/9dKLWyqlnuLhGSDRRfDpFuITqvx.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BZDk4ZjlkZGEtNzExOS00YzI0LWI4YzMtMDU1YzhkOTZlMGY2XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg"
   },
   {
-    "id": "m22",
-    "title": "Captain Marvel",
+    "id": "m22", "title": "Captain Marvel",
     "genre": "Sci-Fi", "subGenre": "Action", "category": "Hollywood",
     "rating": 8.4, "duration": 123, "releaseYear": 2019, "language": "English",
     "director": "Anna Boden, Ryan Fleck",
     "cast": "Brie Larson, Samuel L. Jackson, Ben Mendelsohn, Jude Law",
-    "description": "Carol Danvers becomes one of the universe's most powerful heroes when Earth is caught in a galactic war.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/AtsgWhDnHTq68L0lLsUrCnM7TjG.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/w2PMyoyLU22YvrGK3smVM9fW1jj.jpg"
+    "description": "Carol Danvers becomes one of the universe's most powerful heroes.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMTE4NTM1OTAxMDNeQTJeQWpwZ15BbWU4MDIyMTAxNTMx._V1_SX300.jpg"
   },
   {
-    "id": "m23",
-    "title": "Black Widow",
+    "id": "m23", "title": "Black Widow",
     "genre": "Action", "subGenre": "Thriller", "category": "Hollywood",
     "rating": 8.6, "duration": 134, "releaseYear": 2021, "language": "English",
     "director": "Cate Shortland",
     "cast": "Scarlett Johansson, Florence Pugh, David Harbour, Rachel Weisz",
-    "description": "Natasha Romanoff confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/qAZ0pzat24kLdO3o8ejmbLxyOac.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/jMEKEN1qqLzzHEQSDLJwbw1gMMs.jpg"
+    "description": "Natasha Romanoff confronts a dangerous conspiracy with ties to her past.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNjRmNDI5MjMtMmFhZi00YzcwLWI4ZGItMGI2MjI5N2MtNWZlXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg"
   },
   {
-    "id": "m24",
-    "title": "X-Men: Days of Future Past",
+    "id": "m24", "title": "X-Men: Days of Future Past",
     "genre": "Sci-Fi", "subGenre": "Action", "category": "Hollywood",
     "rating": 9.4, "duration": 131, "releaseYear": 2014, "language": "English",
     "director": "Bryan Singer",
     "cast": "Hugh Jackman, James McAvoy, Michael Fassbender, Jennifer Lawrence",
-    "description": "The X-Men send Wolverine to the past to change history and prevent doom for both humans and mutants.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/az2kmXCOBUfICBkPWVoUFyBLbzQ.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/ankz3oMFGD41bHMWLTbT73bMlYv.jpg"
+    "description": "The X-Men send Wolverine to the past to change history and prevent doom for humans and mutants.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNGYwOWQxODQtM2I4YS00NmM5LTllN2UtOTk1ZTMxNGE3ZGQ5XkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg"
   },
   {
-    "id": "m25",
-    "title": "Ant-Man",
+    "id": "m25", "title": "Ant-Man",
     "genre": "Comedy", "subGenre": "Sci-Fi", "category": "Hollywood",
     "rating": 9.0, "duration": 117, "releaseYear": 2015, "language": "English",
     "director": "Peyton Reed",
     "cast": "Paul Rudd, Michael Douglas, Evangeline Lilly, Corey Stoll",
-    "description": "Armed with a super-suit that shrinks in scale but increases in strength, Scott Lang must help Dr. Hank Pym plan a heist.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/tVFONkBF30uj9HBCt5O4aHMoiDG.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/dW1d5nZ2Ix3rJPH5gQBpBYIbZSj.jpg"
+    "description": "Armed with a super-suit that shrinks in scale but increases in strength, Scott Lang must pull off a heist.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMjM2NTQ5Mzc2M15BMl5BanBnXkFtZTgwNTcxMDI2NTE@._V1_SX300.jpg"
   },
   {
-    "id": "m26",
-    "title": "Black Panther: Wakanda Forever",
+    "id": "m26", "title": "Black Panther: Wakanda Forever",
     "genre": "Action", "subGenre": "Drama", "category": "Hollywood",
     "rating": 9.0, "duration": 161, "releaseYear": 2022, "language": "English",
     "director": "Ryan Coogler",
     "cast": "Letitia Wright, Lupita Nyong'o, Danai Gurira, Winston Duke",
     "description": "The people of Wakanda fight to protect their home as they mourn the death of King T'Challa.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/sv1xJUazXoQuIDtiiz8746Ep396.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/xDMIl84Qo5Tsu62c9DGWhmPI67A.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNTM4NjIxNmEtYWE5NS00NDczLTkyNWQtYThhNmQyZGQzMjM0XkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg"
   },
   {
-    "id": "h1",
-    "title": "Interstellar",
+    "id": "h1", "title": "Interstellar",
     "genre": "Sci-Fi", "subGenre": "Drama", "category": "Hollywood",
     "rating": 9.8, "duration": 169, "releaseYear": 2014, "language": "English",
     "director": "Christopher Nolan",
     "cast": "Matthew McConaughey, Anne Hathaway, Jessica Chastain, Ellen Burstyn",
-    "description": "A team of explorers travels through a wormhole in space to ensure humanity's survival.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/xJHokMbljvjADYdit5fK5VQsXEG.jpg"
+    "description": "A team of explorers travels through a wormhole to ensure humanity's survival.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg"
   },
   {
-    "id": "h2",
-    "title": "Inception",
+    "id": "h2", "title": "Inception",
     "genre": "Sci-Fi", "subGenre": "Thriller", "category": "Hollywood",
     "rating": 9.6, "duration": 148, "releaseYear": 2010, "language": "English",
     "director": "Christopher Nolan",
     "cast": "Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page, Tom Hardy",
-    "description": "A thief who steals corporate secrets through dream-sharing technology is given the task of planting an idea.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/edv5CZvWj09upOsy2Y6IwDhK8bt.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/s2bT29y0ngXxxu2IA8AOzzXTRhd.jpg"
+    "description": "A thief who steals secrets through dream-sharing technology is given the task of planting an idea.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg"
   },
   {
-    "id": "h3",
-    "title": "The Dark Knight",
+    "id": "h3", "title": "The Dark Knight",
     "genre": "Action", "subGenre": "Thriller", "category": "Hollywood",
     "rating": 9.8, "duration": 152, "releaseYear": 2008, "language": "English",
     "director": "Christopher Nolan",
     "cast": "Christian Bale, Heath Ledger, Aaron Eckhart, Maggie Gyllenhaal",
-    "description": "When the Joker wreaks havoc on Gotham, Batman must accept one of the greatest psychological and physical tests of his ability.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/hkBaDkMWbLaf8B1lsWsKX7Ew3Xq.jpg"
+    "description": "When the Joker wreaks havoc on Gotham, Batman faces the greatest test of his ability to fight injustice.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SX300.jpg"
   },
   {
-    "id": "h4",
-    "title": "Titanic",
+    "id": "h4", "title": "Titanic",
     "genre": "Romance", "subGenre": "Drama", "category": "Hollywood",
     "rating": 9.6, "duration": 194, "releaseYear": 1997, "language": "English",
     "director": "James Cameron",
     "cast": "Leonardo DiCaprio, Kate Winslet, Billy Zane, Kathy Bates",
-    "description": "A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the ill-fated R.M.S. Titanic.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/kHXEpyfl6zqn8a6YuozZUujufXf.jpg"
+    "description": "A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the ill-fated Titanic.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg"
   },
   {
-    "id": "h5",
-    "title": "Avatar",
+    "id": "h5", "title": "Avatar",
     "genre": "Sci-Fi", "subGenre": "Action", "category": "Hollywood",
     "rating": 9.4, "duration": 162, "releaseYear": 2009, "language": "English",
     "director": "James Cameron",
     "cast": "Sam Worthington, Zoe Saldana, Sigourney Weaver, Stephen Lang",
-    "description": "A paraplegic Marine dispatched to Pandora becomes torn between following orders and protecting the world he loves.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/jRXYjXNq0Cs2TcJjLkki24MLp7u.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/AmR3JfHSjss2Coh4aRPDlhiJczx.jpg"
+    "description": "A paraplegic Marine on Pandora becomes torn between following orders and protecting the world he loves.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BZDA0OGQxNTItMDZkMC00N2UyLTg3MzMtOTViZmRiNWQ1ZDgxXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg"
   },
   {
-    "id": "h6",
-    "title": "Jurassic Park",
+    "id": "h6", "title": "Jurassic Park",
     "genre": "Sci-Fi", "subGenre": "Thriller", "category": "Hollywood",
     "rating": 9.4, "duration": 127, "releaseYear": 1993, "language": "English",
     "director": "Steven Spielberg",
     "cast": "Sam Neill, Laura Dern, Jeff Goldblum, Richard Attenborough",
-    "description": "A pragmatic paleontologist is tasked with protecting a couple of kids after a power failure causes cloned dinosaurs to run loose.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/oU7Oq2kFAAlGqbU4VoAE36g4hoI.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/lOEjfxYpfVRHlrEZs7hPwdLWwUg.jpg"
+    "description": "A power failure causes cloned dinosaurs to run loose in a theme park.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMjM2MDgxMDg0Nl5BMl5BanBnXkFtZTgwNTM2OTM5NDE@._V1_SX300.jpg"
   },
   {
-    "id": "h7",
-    "title": "The Matrix",
+    "id": "h7", "title": "The Matrix",
     "genre": "Sci-Fi", "subGenre": "Action", "category": "Hollywood",
     "rating": 9.6, "duration": 136, "releaseYear": 1999, "language": "English",
     "director": "Lana Wachowski, Lilly Wachowski",
     "cast": "Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss, Hugo Weaving",
-    "description": "Computer hacker Neo discovers the shocking truth — the life he knows is the elaborate deception of an evil cyber-intelligence.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/ncEsesgOJDNrTUED89hYbA117eo.jpg"
+    "description": "Computer hacker Neo discovers the life he knows is an elaborate deception of an evil cyber-intelligence.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVlLTM5YTctZjEwM2QwZjI5ZTMzXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"
   },
   {
-    "id": "h8",
-    "title": "Pulp Fiction",
+    "id": "h8", "title": "Pulp Fiction",
     "genre": "Drama", "subGenre": "Thriller", "category": "Hollywood",
     "rating": 9.4, "duration": 154, "releaseYear": 1994, "language": "English",
     "director": "Quentin Tarantino",
     "cast": "John Travolta, Uma Thurman, Samuel L. Jackson, Bruce Willis",
     "description": "The lives of two mob hitmen, a boxer, and a gangster intertwine in four tales of violence and redemption.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/4cDFJr4HnXN5AdPw4AKrmLlMWdO.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg"
   },
   {
-    "id": "h9",
-    "title": "Forrest Gump",
+    "id": "h9", "title": "Forrest Gump",
     "genre": "Drama", "subGenre": "Romance", "category": "Hollywood",
     "rating": 9.6, "duration": 142, "releaseYear": 1994, "language": "English",
     "director": "Robert Zemeckis",
     "cast": "Tom Hanks, Robin Wright, Gary Sinise, Sally Field",
     "description": "The history of the United States from the 1950s to 1970s unfolds from the perspective of an Alabama man with an IQ of 75.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/arw2vcBveWOVZr6pxd9XTd1TdQa.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/qdIMHd4sEfJSckfVJfKQvisL02a.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNWIwODRlZTUtY2U3ZS00Yzg1LWJhNzYtMmZiYmEyNmU1NjMzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg"
   },
   {
-    "id": "h10",
-    "title": "Gladiator",
+    "id": "h10", "title": "Gladiator",
     "genre": "Action", "subGenre": "Drama", "category": "Hollywood",
     "rating": 9.6, "duration": 155, "releaseYear": 2000, "language": "English",
     "director": "Ridley Scott",
     "cast": "Russell Crowe, Joaquin Phoenix, Connie Nielsen, Oliver Reed",
     "description": "A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/ty8TGRuvJLPUmAR1H1nRIsgwvim.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/6WxhEvFsauuR4IL68LFDqe6DLVG.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"
   },
   {
-    "id": "h11",
-    "title": "The Godfather",
+    "id": "h11", "title": "The Godfather",
     "genre": "Drama", "subGenre": "Thriller", "category": "Hollywood",
     "rating": 9.8, "duration": 175, "releaseYear": 1972, "language": "English",
     "director": "Francis Ford Coppola",
     "cast": "Marlon Brando, Al Pacino, James Caan, Diane Keaton",
-    "description": "The aging patriarch of an organized crime dynasty transfers control of his empire to his reluctant son.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsLeMMovrAwSP.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/tmU7GeKVybMWFButWEGl2M4GeiP.jpg"
+    "description": "The aging patriarch of an organized crime dynasty transfers control to his reluctant son.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg"
   },
   {
-    "id": "h12",
-    "title": "Dune: Part One",
+    "id": "h12", "title": "Dune: Part One",
     "genre": "Sci-Fi", "subGenre": "Fantasy", "category": "Hollywood",
     "rating": 9.4, "duration": 155, "releaseYear": 2021, "language": "English",
     "director": "Denis Villeneuve",
     "cast": "Timothée Chalamet, Rebecca Ferguson, Zendaya, Oscar Isaac",
     "description": "A noble family becomes embroiled in a war for control over the galaxy's most valuable asset.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/d5NXSklpcvkfNoq2SWYou74FSTW.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/iopYFB1b6Bh7FWZh3onQhph1CZs.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BN2FjNmEyNWMtYzM0ZS00NjIyLTg2YzYtYTU2NjE5YzAzZTU3XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg"
   },
   {
-    "id": "h13",
-    "title": "Oppenheimer",
+    "id": "h13", "title": "Oppenheimer",
     "genre": "Drama", "subGenre": "Thriller", "category": "Hollywood",
     "rating": 9.6, "duration": 180, "releaseYear": 2023, "language": "English",
     "director": "Christopher Nolan",
     "cast": "Cillian Murphy, Emily Blunt, Matt Damon, Robert Downey Jr.",
-    "description": "The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/rLb2cwF3Pazuxaj0sRXQ037tGI1.jpg"
+    "description": "The story of J. Robert Oppenheimer and his role in the development of the atomic bomb.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_SX300.jpg"
   },
   {
-    "id": "h14",
-    "title": "Barbie",
+    "id": "h14", "title": "Barbie",
     "genre": "Comedy", "subGenre": "Fantasy", "category": "Hollywood",
     "rating": 8.4, "duration": 114, "releaseYear": 2023, "language": "English",
     "director": "Greta Gerwig",
     "cast": "Margot Robbie, Ryan Gosling, America Ferrera, Will Ferrell",
-    "description": "Barbie and Ken go to the real world and discover the joys and perils of living among humans.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/iuFNMS8vlbSYi6JKcgQbvKvaAdS.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/nHf61UzkfFno5X1ofIhugCPus2R.jpg"
+    "description": "Barbie and Ken discover the joys and perils of living among humans in the real world.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNjU3N2QxNzYtMjk1NC00MTc4LTk1NTQtMmUxNTljM2I0NDA5XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_SX300.jpg"
   },
   {
-    "id": "h15",
-    "title": "The Lord of the Rings: The Fellowship of the Ring",
+    "id": "h15", "title": "The Lord of the Rings: The Fellowship of the Ring",
     "genre": "Fantasy", "subGenre": "Action", "category": "Hollywood",
     "rating": 9.8, "duration": 178, "releaseYear": 2001, "language": "English",
     "director": "Peter Jackson",
     "cast": "Elijah Wood, Ian McKellen, Orlando Bloom, Viggo Mortensen",
-    "description": "A meek Hobbit and eight companions set out on a journey to destroy the powerful One Ring.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/pIgHo6xWmzR1GkzJNLbDqKEUCF4.jpg"
+    "description": "A meek Hobbit and eight companions set out to destroy the powerful One Ring.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_SX300.jpg"
   },
   {
-    "id": "h16",
-    "title": "Avatar: The Way of Water",
+    "id": "h16", "title": "Avatar: The Way of Water",
     "genre": "Sci-Fi", "subGenre": "Action", "category": "Hollywood",
     "rating": 9.2, "duration": 192, "releaseYear": 2022, "language": "English",
     "director": "James Cameron",
     "cast": "Sam Worthington, Zoe Saldana, Sigourney Weaver, Kate Winslet",
-    "description": "Jake Sully and his family must work with Neytiri and the Na'vi to protect their home from a returning threat.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/evaFLqtswezLosllRZtJNMkhXnX.jpg"
+    "description": "Jake Sully and his family must work with Neytiri and the Na'vi to protect their home.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_SX300.jpg"
   },
   {
-    "id": "h17",
-    "title": "The Lord of the Rings: The Return of the King",
+    "id": "h17", "title": "The Lord of the Rings: The Return of the King",
     "genre": "Fantasy", "subGenre": "Action", "category": "Hollywood",
     "rating": 9.8, "duration": 201, "releaseYear": 2003, "language": "English",
     "director": "Peter Jackson",
     "cast": "Elijah Wood, Viggo Mortensen, Ian McKellen, Orlando Bloom",
-    "description": "Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/rCzpDGLbOoPwLjy3OAm5NUPOTrC.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/lXhgCODAbBXL5buk9yEmTpOoOgR.jpg"
+    "description": "Aragorn leads the World of Men against Sauron to draw his gaze from Frodo and Sam approaching Mount Doom.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNzA5ZDJhZWMtODU5NS00ODk2LTkwMDktZjgzODAxMjIzODFmXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg"
   },
   {
-    "id": "h18",
-    "title": "Mad Max: Fury Road",
+    "id": "h18", "title": "Mad Max: Fury Road",
     "genre": "Action", "subGenre": "Sci-Fi", "category": "Hollywood",
     "rating": 9.4, "duration": 120, "releaseYear": 2015, "language": "English",
     "director": "George Miller",
     "cast": "Tom Hardy, Charlize Theron, Nicholas Hoult, Zoë Kravitz",
-    "description": "In a post-apocalyptic wasteland, a woman rebels against a tyrannical ruler in search for her homeland.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/kqjL17yufvn9OVLyXYpvtyrFfak.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/phszHPFnhGCDiiM4XNwSMwf3e9v.jpg"
+    "description": "In a post-apocalyptic wasteland, a woman rebels against a tyrannical ruler seeking her homeland.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BN2EwM2I5OWMtMGQyMi00Zjg1LWJkNTctZTdjYTA4OGUwZjMyXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg"
   },
   {
-    "id": "h19",
-    "title": "The Wolf of Wall Street",
+    "id": "h19", "title": "The Wolf of Wall Street",
     "genre": "Comedy", "subGenre": "Drama", "category": "Hollywood",
     "rating": 9.4, "duration": 180, "releaseYear": 2013, "language": "English",
     "director": "Martin Scorsese",
     "cast": "Leonardo DiCaprio, Jonah Hill, Margot Robbie, Matthew McConaughey",
-    "description": "Based on the true story of Jordan Belfort, from his rise as a wealthy stock-broker to his fall involving crime and corruption.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/34m2tygAYBGqA9MXKhRDtzWd4se.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/ugNBDotFTuMWxgMDJGplMeXPyLv.jpg"
+    "description": "Based on the true story of Jordan Belfort, from his rise as a wealthy stock-broker to his fall involving crime.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_SX300.jpg"
   },
   {
-    "id": "h20",
-    "title": "Joker",
+    "id": "h20", "title": "Joker",
     "genre": "Thriller", "subGenre": "Drama", "category": "Hollywood",
     "rating": 9.6, "duration": 122, "releaseYear": 2019, "language": "English",
     "director": "Todd Phillips",
     "cast": "Joaquin Phoenix, Robert De Niro, Zazie Beetz, Frances Conroy",
     "description": "A mentally troubled stand-up comedian embarks on a downward spiral that leads to his infamous alter-ego.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/n6bUvigpRFqSwmPp1bJkPs3KxBh.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2ZiYTk2YmI3NTYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg"
   },
   {
-    "id": "h21",
-    "title": "Parasite",
+    "id": "h21", "title": "Parasite",
     "genre": "Thriller", "subGenre": "Drama", "category": "Hollywood",
     "rating": 9.8, "duration": 132, "releaseYear": 2019, "language": "Korean",
     "director": "Bong Joon Ho",
     "cast": "Song Kang-ho, Lee Sun-kyun, Cho Yeo-jeong, Choi Woo-shik",
-    "description": "Greed and class discrimination threaten the symbiotic relationship between the wealthy Park family and the destitute Kim clan.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/TU9NIjwzjoKPwQHoHshkFcQUCG.jpg"
+    "description": "Greed and class discrimination threaten the symbiotic relationship between the wealthy Park family and destitute Kim clan.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg"
   },
   {
-    "id": "h22",
-    "title": "Spirited Away",
+    "id": "h22", "title": "Spirited Away",
     "genre": "Animation", "subGenre": "Fantasy", "category": "Hollywood",
     "rating": 9.8, "duration": 125, "releaseYear": 2001, "language": "Japanese",
     "director": "Hayao Miyazaki",
-    "cast": "Rumi Hiiragi, Miyu Irino, Mari Natsuki, Takashi Naitô",
-    "description": "A sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits where humans are changed into beasts.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/Ab8mkyvkOhOiJxlYWKoPsHu0bcj.jpg"
+    "cast": "Rumi Hiiragi, Miyu Irino, Mari Natsuki",
+    "description": "A sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMjlmZmI5MDctNDE2YS00YWE0LWE5ZWItZDBhYWQ0NTcxNWRhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg"
   },
   {
-    "id": "h23",
-    "title": "The Lion King",
+    "id": "h23", "title": "The Lion King",
     "genre": "Animation", "subGenre": "Drama", "category": "Hollywood",
     "rating": 9.6, "duration": 88, "releaseYear": 1994, "language": "English",
     "director": "Roger Allers, Rob Minkoff",
     "cast": "Matthew Broderick, Jeremy Irons, James Earl Jones, Whoopi Goldberg",
-    "description": "Lion prince Simba and his father are targeted by his bitter uncle Scar, who wants to ascend the throne himself.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/sKCr78MXSuA3CTH1UrmxNa3VWZE.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/wXsQvli6tWqja51pYxXNG1LFIGV.jpg"
+    "description": "Lion prince Simba and his father are targeted by his bitter uncle Scar.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BYTYxNGMyZTYtMjE3MS00MWIwLWJmNjItZDhiMDg2NDU5MDg0XkEyXkFqcGdeQXVyNjY5NDU4NzI@._V1_SX300.jpg"
   },
   {
-    "id": "h24",
-    "title": "Toy Story 4",
+    "id": "h24", "title": "Toy Story 4",
     "genre": "Animation", "subGenre": "Comedy", "category": "Hollywood",
     "rating": 9.0, "duration": 100, "releaseYear": 2019, "language": "English",
     "director": "Josh Cooley",
     "cast": "Tom Hanks, Tim Allen, Annie Potts, Tony Hale",
-    "description": "When a new toy called Forky joins Woody and the gang, a road trip reveals how big the world can be for a toy.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/w9kR8qbmQ01HwnvK4alvnQ2ca0L.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/jnFDfJSzpxkhXGOnuXYnREVHMqe.jpg"
+    "description": "When a new toy called Forky joins the gang, a road trip reveals how big the world can be for a toy.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMTYzMDM4NzkxOV5BMl5BanBnXkFtZTgwNzM1Mzg2NzM@._V1_SX300.jpg"
   },
   {
-    "id": "h25",
-    "title": "Fight Club",
+    "id": "h25", "title": "Fight Club",
     "genre": "Drama", "subGenre": "Thriller", "category": "Hollywood",
     "rating": 9.6, "duration": 139, "releaseYear": 1999, "language": "English",
     "director": "David Fincher",
     "cast": "Brad Pitt, Edward Norton, Meat Loaf, Zach Grenier",
-    "description": "An insomniac office worker and a devil-may-care soap maker form an underground fight club that evolves into much more.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/rr7E0NoGKxvbkb89eR1GwfoYjpA.jpg"
+    "description": "An insomniac office worker and a soap maker form an underground fight club that evolves into much more.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNDIzNDU0YzEtYzE5Ni00ZjlkLTk5ZjgtNjM3NWE4YzA3Nzk3XkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg"
   },
   {
-    "id": "h26",
-    "title": "The Shawshank Redemption",
+    "id": "h26", "title": "The Shawshank Redemption",
     "genre": "Drama", "subGenre": "Drama", "category": "Hollywood",
     "rating": 9.8, "duration": 142, "releaseYear": 1994, "language": "English",
     "director": "Frank Darabont",
     "cast": "Tim Robbins, Morgan Freeman, Bob Gunton, William Sadler",
     "description": "Two convicts form a friendship, seeking consolation and eventual redemption through basic compassion.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/lyQBXzOQSuE59IsHyhrp0qIiPAz.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NiZmLTg3MGItZjQwOWVlMzY0NWIwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_SX300.jpg"
   },
   {
-    "id": "h27",
-    "title": "Dune: Part Two",
+    "id": "h27", "title": "Dune: Part Two",
     "genre": "Sci-Fi", "subGenre": "Fantasy", "category": "Hollywood",
     "rating": 9.8, "duration": 166, "releaseYear": 2024, "language": "English",
     "director": "Denis Villeneuve",
     "cast": "Timothée Chalamet, Zendaya, Rebecca Ferguson, Javier Bardem",
     "description": "Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/xOMo8BRK7PfcJv9JCnx7s5hj0PX.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BN2QyZGU4ZDctOWMzMy00NTc5LThlOGQtOGY5ZDhhNWRhNDg1XkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_SX300.jpg"
   },
   {
-    "id": "h28",
-    "title": "Gladiator II",
+    "id": "h28", "title": "Gladiator II",
     "genre": "Action", "subGenre": "Drama", "category": "Hollywood",
     "rating": 8.8, "duration": 148, "releaseYear": 2024, "language": "English",
     "director": "Ridley Scott",
     "cast": "Paul Mescal, Pedro Pascal, Denzel Washington, Connie Nielsen",
-    "description": "Lucius is forced to enter the Colosseum after his home is conquered by the tyrannical Emperors who lead Rome.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/2cxhvwyEwRlysAmRH4iodkvo0z5.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/tkPk3TFzSAOuU4V9HBK5F6L6nNI.jpg"
+    "description": "Lucius is forced to enter the Colosseum after his home is conquered by the tyrannical Emperors of Rome.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BOTRhNzMwOTItZDE3ZS00OGY0LWE4MTEtODk0NDk0NWY1OTJlXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg"
   },
   {
-    "id": "h29",
-    "title": "Se7en",
+    "id": "h29", "title": "Se7en",
     "genre": "Thriller", "subGenre": "Horror", "category": "Hollywood",
     "rating": 9.4, "duration": 127, "releaseYear": 1995, "language": "English",
     "director": "David Fincher",
     "cast": "Morgan Freeman, Brad Pitt, Kevin Spacey, Gwyneth Paltrow",
     "description": "Two detectives hunt a serial killer who uses the seven deadly sins as his motives.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/6yoghtyTpznpBik8EngEmJskVUO.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/ba90s7hy2t3zJJNnCaM5YVcqGSH.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BOTUwODM5MTctZjczMy00OTk4LTg3NWUtNjVjYjgwMzdiZGM1XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"
   },
   {
-    "id": "h30",
-    "title": "The Silence of the Lambs",
+    "id": "h30", "title": "The Silence of the Lambs",
     "genre": "Thriller", "subGenre": "Horror", "category": "Hollywood",
     "rating": 9.6, "duration": 118, "releaseYear": 1991, "language": "English",
     "director": "Jonathan Demme",
     "cast": "Jodie Foster, Anthony Hopkins, Lawrence A. Bonney",
-    "description": "A young FBI cadet must receive the help of an incarcerated cannibal killer to help catch another serial killer.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/uS9m8OBk1A8eM9I042bx8XXpqAq.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/mfwq2nMBzArzQ7Y9RKE8SKeeTkg.jpg"
+    "description": "A young FBI cadet must receive help from an incarcerated cannibal killer to catch another serial killer.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNjNhZTk0ZmEtNjJhMi00YzFlLWE1MmEtYzM1M2ZmMGMwMTU4XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"
   },
   {
-    "id": "h31",
-    "title": "The Conjuring",
+    "id": "h31", "title": "The Conjuring",
     "genre": "Horror", "subGenre": "Thriller", "category": "Hollywood",
     "rating": 9.2, "duration": 112, "releaseYear": 2013, "language": "English",
     "director": "James Wan",
     "cast": "Patrick Wilson, Vera Farmiga, Ron Livingston, Lili Taylor",
-    "description": "Paranormal investigators Ed and Lorraine Warren help a family terrorized by a dark presence in their farmhouse.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/wVYREutTvI2tmxr6ujrHT704wGF.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/nE3WDiCmDFIkCOumGTCsEEzSoLE.jpg"
+    "description": "Paranormal investigators Ed and Lorraine Warren help a family terrorized by a dark presence.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMTM3NjA1NDMyMV5BMl5BanBnXkFtZTcwMDQzNDMzOQ@@._V1_SX300.jpg"
   },
   {
-    "id": "h32",
-    "title": "Get Out",
+    "id": "h32", "title": "Get Out",
     "genre": "Horror", "subGenre": "Thriller", "category": "Hollywood",
     "rating": 9.4, "duration": 104, "releaseYear": 2017, "language": "English",
     "director": "Jordan Peele",
     "cast": "Daniel Kaluuya, Allison Williams, Bradley Whitford, Catherine Keener",
-    "description": "A young African-American visits his white girlfriend's parents, where his uneasiness eventually reaches a boiling point.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/tFXcEccSQMf3lfhfXKSU9iRBpa3.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/mvSkmMjMJdRYPaVJSCvpMPmHQ7R.jpg"
+    "description": "A young African-American visits his white girlfriend's parents, where his uneasiness reaches a boiling point.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMjUxMDQwNjcyNl5BMl5BanBnXkFtZTgwNzcwMzc1MTI@._V1_SX300.jpg"
   },
   {
-    "id": "h33",
-    "title": "It",
+    "id": "h33", "title": "It",
     "genre": "Horror", "subGenre": "Drama", "category": "Hollywood",
     "rating": 9.0, "duration": 135, "releaseYear": 2017, "language": "English",
     "director": "Andy Muschietti",
     "cast": "Bill Skarsgård, Jaeden Martell, Finn Wolfhard, Sophia Lillis",
-    "description": "A group of bullied kids band together to destroy a shape-shifting monster that disguises itself as a clown.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/9E2y5Q7WlCVNEhP5GkVlo914eBp.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/nbRP0Lz6dKgpBRQtNVlD1SXV0PW.jpg"
+    "description": "A group of bullied kids band together to destroy a shape-shifting monster disguised as a clown.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BZDVkZmI0YzAtNzdjYi00ZjhhLWE1ODEtMWMzMWMzNDA0NmQ4XkEyXkFqcGdeQXVyNzYzODM3Mzg@._V1_SX300.jpg"
   },
   {
-    "id": "h34",
-    "title": "A Quiet Place",
+    "id": "h34", "title": "A Quiet Place",
     "genre": "Horror", "subGenre": "Sci-Fi", "category": "Hollywood",
     "rating": 9.2, "duration": 90, "releaseYear": 2018, "language": "English",
     "director": "John Krasinski",
     "cast": "Emily Blunt, John Krasinski, Millicent Simmonds, Noah Jupe",
-    "description": "A family struggles for survival in a world where most humans have been killed by noise-sensitive monsters.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/nAU74GmpUk7t5iklEp3bufwDq4n.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/roYyPiQSMRkdtJaRSdMRv4ZVboc.jpg"
+    "description": "A family struggles for survival in a world where monsters hunt by sound.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMjI0MDMzNTQ0M15BMl5BanBnXkFtZTgwMTM5NzM3NDM@._V1_SX300.jpg"
   },
   {
-    "id": "h35",
-    "title": "Whiplash",
+    "id": "h35", "title": "Whiplash",
     "genre": "Drama", "subGenre": "Music", "category": "Hollywood",
     "rating": 9.6, "duration": 107, "releaseYear": 2014, "language": "English",
     "director": "Damien Chazelle",
     "cast": "Miles Teller, J.K. Simmons, Paul Reiser, Melissa Benoist",
-    "description": "A promising young drummer enrolls at a cut-throat music conservatory where his dreams of greatness are tested.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/7fn624j5lj3xTme2SgiLCeuedmO.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/fRGxZuo7jJUWQsVg9PREb98Aclp.jpg"
+    "description": "A promising young drummer enrolls at a music conservatory where his dreams of greatness are tested.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BOTA5NDZlZGUtMjAxOS00YTRkLTkwYmMtYWQ0NWEwZDZiNjEzXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg"
   },
   {
-    "id": "h36",
-    "title": "La La Land",
+    "id": "h36", "title": "La La Land",
     "genre": "Romance", "subGenre": "Musical", "category": "Hollywood",
     "rating": 9.4, "duration": 128, "releaseYear": 2016, "language": "English",
     "director": "Damien Chazelle",
     "cast": "Ryan Gosling, Emma Stone, Rosemarie DeWitt, J.K. Simmons",
     "description": "While navigating their careers in Los Angeles, a pianist and an actress fall in love.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/ylXCdC106IKiarftHkcacasaAcb.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/nadTlnTE9bDf4COnQHGnqeAQkzv.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMzUzNDM2NzM2MV5BMl5BanBnXkFtZTgwNTM3NTg4OTE@._V1_SX300.jpg"
   },
   {
-    "id": "h37",
-    "title": "Knives Out",
+    "id": "h37", "title": "Knives Out",
     "genre": "Comedy", "subGenre": "Thriller", "category": "Hollywood",
     "rating": 9.4, "duration": 130, "releaseYear": 2019, "language": "English",
     "director": "Rian Johnson",
     "cast": "Daniel Craig, Chris Evans, Ana de Armas, Jamie Lee Curtis",
-    "description": "A detective investigates the death of the patriarch of an eccentric, combative family.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/pThyQovXQrws2OmKFBB2JsCSxXH.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/1gVIkQzVobYvBsEIqcJjZ2TXy7p.jpg"
+    "description": "A detective investigates the death of the patriarch of an eccentric family.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMGUwZjliMTAtNzAxZi00MWNiLWE2NzgtZGUxMGQxZjhhNDRiXkEyXkFqcGdeQXVyNjU1NzU3MDc@._V1_SX300.jpg"
   },
   {
-    "id": "h38",
-    "title": "Inside Out 2",
+    "id": "h38", "title": "Inside Out 2",
     "genre": "Animation", "subGenre": "Comedy", "category": "Hollywood",
     "rating": 9.6, "duration": 96, "releaseYear": 2024, "language": "English",
     "director": "Kelsey Mann",
     "cast": "Amy Poehler, Maya Hawke, Kensington Tallman, Liza Lapira",
     "description": "Follow Riley in her teenage years as she encounters a whole new set of emotions.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/xg27NrXi7VXCGUr7MG75UqLl6Vg.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BZjZhOTM5ZWMtMTRjMi00YjZlLWJhMjMtZTZhMjQ3YzNhMjIzXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg"
   },
   {
-    "id": "b1",
-    "title": "Dangal",
+    "id": "b1", "title": "Dangal",
     "genre": "Drama", "subGenre": "Action", "category": "Bollywood",
     "rating": 9.8, "duration": 161, "releaseYear": 2016, "language": "Hindi",
     "director": "Nitesh Tiwari",
     "cast": "Aamir Khan, Sakshi Tanwar, Fatima Sana Shaikh, Sanya Malhotra",
-    "description": "Former wrestler Mahavir Singh Phogat and his two wrestler daughters struggle towards glory at the Commonwealth Games.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/9eXzFMp7rlUNAFqfH7WA9XlrHFB.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/jtAI6OJIWLWiRItNSZoWjrsUtmi.jpg"
+    "description": "Former wrestler Mahavir Singh Phogat and his daughters struggle towards glory at the Commonwealth Games.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMjY3NzEyMzQ2NV5BMl5BanBnXkFtZTgwNDA5NjU2OTE@._V1_SX300.jpg"
   },
   {
-    "id": "b2",
-    "title": "3 Idiots",
+    "id": "b2", "title": "3 Idiots",
     "genre": "Comedy", "subGenre": "Drama", "category": "Bollywood",
     "rating": 9.8, "duration": 170, "releaseYear": 2009, "language": "Hindi",
     "director": "Rajkumar Hirani",
     "cast": "Aamir Khan, Madhavan, Sharman Joshi, Kareena Kapoor",
-    "description": "Two friends revisit their college days and recall memories of a friend who inspired them to think differently.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/66A9MqXOyVFCssoloscw79z8Tew.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/1LRLLWGvs5U2NnukNTflq2jJoS3.jpg"
+    "description": "Two friends recall memories of a college friend who inspired them to think differently.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNTkyOGVjMGEtNmIzMS00NzFlLTlhOWQtODYyMDBkZDYzMDU2XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"
   },
   {
-    "id": "b3",
-    "title": "Lagaan",
+    "id": "b3", "title": "Lagaan",
     "genre": "Drama", "subGenre": "Romance", "category": "Bollywood",
     "rating": 9.6, "duration": 224, "releaseYear": 2001, "language": "Hindi",
     "director": "Ashutosh Gowariker",
     "cast": "Aamir Khan, Raghuvir Yadav, Gracy Singh, Rachel Shelley",
-    "description": "During the British Raj, a village accepts a challenge to play cricket to avoid paying high taxes.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/y34bKtQaFJD4G9SH6bfLLsIHUC9.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/7kBc2MRDh8GJYB4OvjhZFR7j7IC.jpg"
+    "description": "During the British Raj, a village accepts a cricket challenge to avoid paying high taxes.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNWNiNWQ0MDYtNWQzMS00N2VhLTliMGItMDc4NzAyY2I1OTcwXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"
   },
   {
-    "id": "b4",
-    "title": "Sholay",
+    "id": "b4", "title": "Sholay",
     "genre": "Action", "subGenre": "Drama", "category": "Bollywood",
     "rating": 9.8, "duration": 204, "releaseYear": 1975, "language": "Hindi",
     "director": "Ramesh Sippy",
     "cast": "Dharmendra, Sanjeev Kumar, Hema Malini, Amitabh Bachchan",
-    "description": "After his family is murdered by a notorious bandit, a retired police officer enlists the help of two outlaws.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/7X1AtwEKfIBvnpOmXLsH4tEsBxK.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/tHisFPblm2yd7DsPl8wHoaYRghr.jpg"
+    "description": "A retired police officer enlists two outlaws to capture the notorious bandit Gabbar Singh.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BODM4Mjc3MjYzMV5BMl5BanBnXkFtZTcwNDQ0MjUyMQ@@._V1_SX300.jpg"
   },
   {
-    "id": "b5",
-    "title": "Dilwale Dulhania Le Jayenge",
+    "id": "b5", "title": "Dilwale Dulhania Le Jayenge",
     "genre": "Romance", "subGenre": "Drama", "category": "Bollywood",
     "rating": 9.6, "duration": 189, "releaseYear": 1995, "language": "Hindi",
     "director": "Aditya Chopra",
     "cast": "Shah Rukh Khan, Kajol, Amrish Puri, Farida Jalal",
-    "description": "When Raj meets Simran in Europe, he follows her to India to win her heart and her father's approval.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/kJlVb7knIMZHnSnYsjuHl6GVT8U.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/4P0LsA9VNAMFBbEzk5DkHnFHsrE.jpg"
+    "description": "Raj follows Simran to India to win her heart and her father's approval.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BZTNlNzc3MDMtZWVkMi00NzgzLWFkYTYtZTZmMGYzNjJkMzQ2XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg"
   },
   {
-    "id": "b6",
-    "title": "Pathaan",
+    "id": "b6", "title": "Pathaan",
     "genre": "Action", "subGenre": "Thriller", "category": "Bollywood",
     "rating": 9.0, "duration": 146, "releaseYear": 2023, "language": "Hindi",
     "director": "Siddharth Anand",
     "cast": "Shah Rukh Khan, Deepika Padukone, John Abraham, Dimple Kapadia",
     "description": "An Indian agent stops a mercenary group from releasing a deadly virus across India.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/gWIE7BapLVbqAMGjBMVFMB74Yy3.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/hIfmbLTzJpTPXCFkEhM6XGG4C16.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BOTNkYjYzNTMtOGJkNy00MDZhLWI4YTUtNDgzNTY4NjcxYTJhXkEyXkFqcGdeQXVyMTUyNjIwMDEw._V1_SX300.jpg"
   },
   {
-    "id": "b7",
-    "title": "Jawan",
+    "id": "b7", "title": "Jawan",
     "genre": "Action", "subGenre": "Thriller", "category": "Bollywood",
     "rating": 9.4, "duration": 168, "releaseYear": 2023, "language": "Hindi",
     "director": "Atlee",
     "cast": "Shah Rukh Khan, Nayanthara, Vijay Sethupathi, Deepika Padukone",
-    "description": "A high-octane action thriller outlining the emotional journey of a man set to rectify the wrongs in society.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/cZtNfSzwVpkThkRjJoVXB9uxJIw.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/w5UBWJvOLHrCULAqjkGfNEzNl3g.jpg"
+    "description": "A high-octane action thriller about a man set to rectify the wrongs in society.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BODFlMjljOTEtZWU4NS00YWZhLTliNjItM2Q3MWQxMWRmNTExXkEyXkFqcGdeQXVyMTUyNjIwMDEw._V1_SX300.jpg"
   },
   {
-    "id": "b8",
-    "title": "PK",
+    "id": "b8", "title": "PK",
     "genre": "Comedy", "subGenre": "Sci-Fi", "category": "Bollywood",
     "rating": 9.4, "duration": 153, "releaseYear": 2014, "language": "Hindi",
     "director": "Rajkumar Hirani",
     "cast": "Aamir Khan, Anushka Sharma, Sushant Singh Rajput, Sanjay Dutt",
-    "description": "An alien on Earth loses the only device he can use to communicate with his spaceship.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/iuq4HKMkN4TwlPAMNHOvPZivQsb.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/lVqcOlsmfEKdmzLDUe6XSZG1CUT.jpg"
+    "description": "An alien on Earth loses his communication device and questions society's views on religion.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMTYzOTE2NjkxN15BMl5BanBnXkFtZTgwMDgzMTg0MzE@._V1_SX300.jpg"
   },
   {
-    "id": "b9",
-    "title": "Bajrangi Bhaijaan",
+    "id": "b9", "title": "Bajrangi Bhaijaan",
     "genre": "Drama", "subGenre": "Comedy", "category": "Bollywood",
     "rating": 9.6, "duration": 163, "releaseYear": 2015, "language": "Hindi",
     "director": "Kabir Khan",
     "cast": "Salman Khan, Harshaali Malhotra, Kareena Kapoor, Nawazuddin Siddiqui",
-    "description": "An Indian man with a magnanimous heart takes a young mute Pakistani girl back to her homeland.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/cBm3MiBL6WcLsAqOqZVWKS47M62.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/1JUHKj3q5ACieLkXCi7eDoP4sXF.jpg"
+    "description": "An Indian man takes a young mute Pakistani girl back to her homeland.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNzBkZTQ2ODYtMjI1MS00ZDgxLWIwZGQtMjI3ZDhlYjZiODE5XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg"
   },
   {
-    "id": "b10",
-    "title": "Kabir Singh",
+    "id": "b10", "title": "Kabir Singh",
     "genre": "Romance", "subGenre": "Drama", "category": "Bollywood",
     "rating": 8.8, "duration": 172, "releaseYear": 2019, "language": "Hindi",
     "director": "Sandeep Reddy Vanga",
     "cast": "Shahid Kapoor, Kiara Advani, Soham Majumdar, Arjan Bajwa",
-    "description": "A short-tempered house surgeon goes into a self-destructive spiral after the love of his life is forced to marry someone else.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/ozNlRPLcYm3OkQD2iZ0gV1dV7tO.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/rXATdM1Ss2nU1g63gRPkQdxmTbC.jpg"
+    "description": "A short-tempered surgeon spirals into self-destruction after his love is forced to marry someone else.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMzZlOTBkMDYtZDUzZS00ZGUxLWJmZjAtZTg1OGZhMjc1MGZmXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg"
   },
   {
-    "id": "b11",
-    "title": "Uri: The Surgical Strike",
+    "id": "b11", "title": "Uri: The Surgical Strike",
     "genre": "Action", "subGenre": "Drama", "category": "Bollywood",
     "rating": 9.6, "duration": 138, "releaseYear": 2019, "language": "Hindi",
     "director": "Aditya Dhar",
     "cast": "Vicky Kaushal, Paresh Rawal, Yami Gautam, Mohit Raina",
-    "description": "The film chronicles the events of the surgical strike conducted by the Indian military against suspected militants.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/7JgjRE7HJVlU1yBDvF4WFoT3iWi.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/uq4YxMNRzSnO2iBPdqHzjQGBLhz.jpg"
+    "description": "The film chronicles the surgical strike conducted by the Indian military against militants.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMjYzNzI4MTMtNzQ5OS00NzkxLTliNTUtN2ExMGRjYjZhNWZiXkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_SX300.jpg"
   },
   {
-    "id": "b12",
-    "title": "Brahmastra: Part One - Shiva",
+    "id": "b12", "title": "Brahmastra: Part One - Shiva",
     "genre": "Fantasy", "subGenre": "Action", "category": "Bollywood",
     "rating": 8.2, "duration": 167, "releaseYear": 2022, "language": "Hindi",
     "director": "Ayan Mukerji",
     "cast": "Ranbir Kapoor, Alia Bhatt, Amitabh Bachchan, Nagarjuna Akkineni",
-    "description": "Shiva, a young DJ, discovers he has a strange connection to fire and the power to awaken the supernatural Brahmastra.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/nFCmh4n5SnEHmjCL0iDPWaOZ3Ww.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/7GLlJRF1WkPBlbPjDlkN3m2ABNN.jpg"
+    "description": "Shiva discovers his connection to fire and the power to awaken the supernatural Brahmastra.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BYjgzYjdhZWYtMjZiYi00YzM5LTgwZmQtNGQ4ZGZkNzliMWUyXkEyXkFqcGdeQXVyMTUyNjIwMDEw._V1_SX300.jpg"
   },
   {
-    "id": "b13",
-    "title": "Zindagi Na Milegi Dobara",
+    "id": "b13", "title": "Zindagi Na Milegi Dobara",
     "genre": "Comedy", "subGenre": "Drama", "category": "Bollywood",
     "rating": 9.6, "duration": 155, "releaseYear": 2011, "language": "Hindi",
     "director": "Zoya Akhtar",
     "cast": "Hrithik Roshan, Farhan Akhtar, Abhay Deol, Katrina Kaif",
     "description": "Three friends decide to turn their fantasy vacation into reality after one of them gets engaged.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/6CpXwEyQyaSGq1pBfgAbHaGGCIb.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/zHGsWGvp0DQS8yLe5CYuNXnZHnV.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNjA4MjczMjg4Nl5BMl5BanBnXkFtZTcwNzE4MDMzNQ@@._V1_SX300.jpg"
   },
   {
-    "id": "b14",
-    "title": "Yeh Jawaani Hai Deewani",
+    "id": "b14", "title": "Yeh Jawaani Hai Deewani",
     "genre": "Romance", "subGenre": "Comedy", "category": "Bollywood",
     "rating": 9.4, "duration": 160, "releaseYear": 2013, "language": "Hindi",
     "director": "Ayan Mukerji",
     "cast": "Ranbir Kapoor, Deepika Padukone, Aditya Roy Kapur, Kalki Koechlin",
-    "description": "Kabir and Naina bond during a trekking trip; they cross paths again years later at a friend's wedding.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/8NHvv8VXYBakfJFSj2jTbmjLvhL.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/tRf2QBtlBxMC7oBkNoxIaawFRcB.jpg"
+    "description": "Kabir and Naina bond during a trekking trip and meet again at a friend's wedding years later.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMTkxOTY3NzYyMl5BMl5BanBnXkFtZTgwNzA1MTYzMDE@._V1_SX300.jpg"
   },
   {
-    "id": "b15",
-    "title": "Dil Chahta Hai",
+    "id": "b15", "title": "Dil Chahta Hai",
     "genre": "Comedy", "subGenre": "Drama", "category": "Bollywood",
     "rating": 9.6, "duration": 183, "releaseYear": 2001, "language": "Hindi",
     "director": "Farhan Akhtar",
     "cast": "Aamir Khan, Saif Ali Khan, Akshaye Khanna, Preity Zinta",
-    "description": "Three inseparable childhood friends are just out of college until they each fall in love.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/3SeMGFpqpNAWvSL2yFtOjLvKLOX.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/dXLkLhBfksBbhbAGG5nj1lcEPUQ.jpg"
+    "description": "Three inseparable childhood friends drift apart after each falls in love.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BOGIwNTc5MDEtMDllNy00YTgwLWIyOGUtOTk5MDkyMzZhMDJhXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg"
   },
   {
-    "id": "b16",
-    "title": "Queen",
+    "id": "b16", "title": "Queen",
     "genre": "Comedy", "subGenre": "Drama", "category": "Bollywood",
     "rating": 9.4, "duration": 146, "releaseYear": 2013, "language": "Hindi",
     "director": "Vikas Bahl",
     "cast": "Kangana Ranaut, Rajkummar Rao, Lisa Haydon, Jeffrey Ho",
     "description": "A Delhi girl goes on her honeymoon to Paris and Amsterdam by herself after her fiance dumps her.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/9NMvYx5i2YxTHEYSXkCfW0HWMWZ.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/tIp2SbNXFq4vSlrgUdI0ZIXLJDo.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNjkxODEwMjItODI5Yy00NmU5LTgwMzItNTNmYTNmOWQyN2U0XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg"
   },
   {
-    "id": "b17",
-    "title": "Barfi!",
-    "genre": "Romance", "subGenre": "Drama", "category": "Bollywood",
-    "rating": 9.6, "duration": 151, "releaseYear": 2012, "language": "Hindi",
-    "director": "Anurag Basu",
-    "cast": "Ranbir Kapoor, Priyanka Chopra, Ileana D'Cruz, Saurabh Shukla",
-    "description": "Three young people learn that love can neither be defined nor contained by society's definition of normal.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/gEDGf4hg4LU9TKJfIjPf5AeGtSw.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/tAEgWTWtxfkQhqzuNNRQFW2HDAD.jpg"
-  },
-  {
-    "id": "b18",
-    "title": "My Name Is Khan",
-    "genre": "Drama", "subGenre": "Romance", "category": "Bollywood",
-    "rating": 9.6, "duration": 165, "releaseYear": 2010, "language": "Hindi",
-    "director": "Karan Johar",
-    "cast": "Shah Rukh Khan, Kajol, Katie A. Keane, Kenton Duty",
-    "description": "An Indian Muslim man with Asperger's syndrome undertakes a journey across the United States to meet the President.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/lbKgtgO2eaVfJH2GWYFGgZSMmYf.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/hJJe6zBnUVubwPfMqVEIDgJuYBW.jpg"
-  },
-  {
-    "id": "b19",
-    "title": "Drishyam",
-    "genre": "Thriller", "subGenre": "Drama", "category": "Bollywood",
-    "rating": 9.6, "duration": 163, "releaseYear": 2015, "language": "Hindi",
-    "director": "Nishikant Kamat",
-    "cast": "Ajay Devgn, Tabu, Shriya Saran, Rajat Kapoor",
-    "description": "A man takes desperate measures to save his family from the dark side of the law after an accidental crime.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/5jRDCpVQIYbOD8CJ22ZtMXJRmfc.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/oVo2S2YEFuP4T0h6bSQLjy3mQEZ.jpg"
-  },
-  {
-    "id": "b20",
-    "title": "Drishyam 2",
-    "genre": "Thriller", "subGenre": "Drama", "category": "Bollywood",
-    "rating": 9.4, "duration": 140, "releaseYear": 2022, "language": "Hindi",
-    "director": "Abhishek Pathak",
-    "cast": "Ajay Devgn, Tabu, Akshaye Khanna, Shriya Saran",
-    "description": "Will Vijay Salgaonkar be able to protect his family this time? A gripping tale of investigation and survival.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/fG1R0aTJ42qdAMqLwH78bFGBWOI.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/5y0E6J5qxPBPAZ3EMGr3wnVtMSj.jpg"
-  },
-  {
-    "id": "b21",
-    "title": "Gangs of Wasseypur",
-    "genre": "Action", "subGenre": "Thriller", "category": "Bollywood",
-    "rating": 9.6, "duration": 321, "releaseYear": 2012, "language": "Hindi",
-    "director": "Anurag Kashyap",
-    "cast": "Manoj Bajpayee, Richa Chadha, Nawazuddin Siddiqui, Tigmanshu Dhulia",
-    "description": "A clash between Sultan and Shahid Khan ignites a deadly blood feud spanning three generations.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/lBBiSBeLQEaFWm2J0X5X0oRrSl9.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/6F9RyqQxiTJHsVHbFgMl0sWVmXB.jpg"
-  },
-  {
-    "id": "b22",
-    "title": "Andhadhun",
+    "id": "b17", "title": "Andhadhun",
     "genre": "Thriller", "subGenre": "Comedy", "category": "Bollywood",
     "rating": 9.6, "duration": 139, "releaseYear": 2018, "language": "Hindi",
     "director": "Sriram Raghavan",
     "cast": "Ayushmann Khurrana, Tabu, Radhika Apte, Anil Dhawan",
-    "description": "A series of mysterious events change the life of a blind pianist who must report a crime he should not have seen.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/9mvmVNPHJwUgBogjPyYSGhLGOxC.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/bLRkGBHklv7Hv8NKXL9rX0BfJGd.jpg"
+    "description": "A blind pianist must report a crime he should not have been able to see.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BZWZhYzY3ZGItNGZkOS00ZmI2LThjNTUtMDNhNzQ3NzFmMjFhXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg"
   },
   {
-    "id": "b23",
-    "title": "Stree",
+    "id": "b18", "title": "Stree",
     "genre": "Comedy", "subGenre": "Horror", "category": "Bollywood",
     "rating": 9.2, "duration": 128, "releaseYear": 2018, "language": "Hindi",
     "director": "Amar Kaushik",
     "cast": "Rajkummar Rao, Shraddha Kapoor, Pankaj Tripathi, Aparshakti Khurana",
-    "description": "In the small town of Chanderi, the menfolk live in fear of an evil spirit named Stree who abducts men.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/tnX8gVCGHhHxkrHPQgkBgVyRJAn.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/kfVdEMGJdmNQVDkQjHXbdxvnFcG.jpg"
+    "description": "In the town of Chanderi, the menfolk live in fear of an evil spirit who abducts men.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMzM3NTQ0NTgxOF5BMl5BanBnXkFtZTgwNDM4NjgwNTM@._V1_SX300.jpg"
   },
   {
-    "id": "b24",
-    "title": "Stree 2",
+    "id": "b19", "title": "Stree 2",
     "genre": "Comedy", "subGenre": "Horror", "category": "Bollywood",
     "rating": 9.4, "duration": 147, "releaseYear": 2024, "language": "Hindi",
     "director": "Amar Kaushik",
     "cast": "Rajkummar Rao, Shraddha Kapoor, Pankaj Tripathi, Abhishek Banerjee",
-    "description": "The town of Chanderi faces a new headless terror named Sarkata. The townsfolk must call upon Stree once again.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/cGOPbv9wgrNBgB3wFMntMqGCqbs.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/bFO9Dau4G0vqbHjH8yOZMdWfBtI.jpg"
+    "description": "The town of Chanderi faces a new headless terror. The townsfolk must call upon Stree once again.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BYThhMGI5ZmEtYTM2Yi00MmY4LTkxMWItMmZmNTliZTc1MGU1XkEyXkFqcGdeQXVyMTUyNjIwMDEw._V1_SX300.jpg"
   },
   {
-    "id": "b25",
-    "title": "Shershaah",
+    "id": "b20", "title": "Shershaah",
     "genre": "Drama", "subGenre": "Action", "category": "Bollywood",
     "rating": 9.6, "duration": 135, "releaseYear": 2021, "language": "Hindi",
     "director": "Vishnuvardhan",
     "cast": "Sidharth Malhotra, Kiara Advani, Shiv Panditt, Nikitin Dheer",
     "description": "The story of Kargil war hero Captain Vikram Batra, awarded the Param Vir Chakra.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/eDAw7O5kMBqR0LBXPIDM4nCvMzx.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/hJJe6zBnUVubwPfMqVEIDgJuYBW.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BOWE4ODJmNjMtYjU5Mi00MzViLWJhMTMtN2Q1ZjBhNTAxM2YzXkEyXkFqcGdeQXVyMTI1NDEyNTM5._V1_SX300.jpg"
   },
   {
-    "id": "b26",
-    "title": "Tanhaji: The Unsung Warrior",
-    "genre": "Action", "subGenre": "Drama", "category": "Bollywood",
-    "rating": 9.2, "duration": 135, "releaseYear": 2020, "language": "Hindi",
-    "director": "Om Raut",
-    "cast": "Ajay Devgn, Saif Ali Khan, Sharad Kelkar, Kajol",
-    "description": "Maratha military leader Tanhaji Malusare battles a fierce Rajput commander to recapture the strategic Kondhana fort.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/dpYF3xdxbIbHJSGHwDmx0EJ9K0J.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/gnz1M3wfPWDvKZfXqolSwQHPnNF.jpg"
-  },
-  {
-    "id": "b27",
-    "title": "War",
-    "genre": "Action", "subGenre": "Thriller", "category": "Bollywood",
-    "rating": 8.4, "duration": 154, "releaseYear": 2019, "language": "Hindi",
-    "director": "Siddharth Anand",
-    "cast": "Hrithik Roshan, Tiger Shroff, Vaani Kapoor, Ashutosh Rana",
-    "description": "An Indian soldier is assigned to eliminate his former mentor, who has gone rogue.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/y9Fgs0YECF8M8MWXpP9bvCGORXbL.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/a5i7fUHEyFvK7AkgFEXhRGIPkh3.jpg"
-  },
-  {
-    "id": "b28",
-    "title": "Dunki",
-    "genre": "Comedy", "subGenre": "Drama", "category": "Bollywood",
-    "rating": 8.6, "duration": 161, "releaseYear": 2023, "language": "Hindi",
-    "director": "Rajkumar Hirani",
-    "cast": "Shah Rukh Khan, Taapsee Pannu, Boman Irani, Vicky Kaushal",
-    "description": "Four friends from Punjab share a common dream to go to England and take an illegal route to get there.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/9ByFDhC2GkJLl3V0oevKVLlCLLe.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/1Kzk57SWdPXMMgVCNLNKiKHIVlz.jpg"
-  },
-  {
-    "id": "b29",
-    "title": "Animal",
+    "id": "b21", "title": "Animal",
     "genre": "Action", "subGenre": "Drama", "category": "Bollywood",
     "rating": 8.4, "duration": 201, "releaseYear": 2023, "language": "Hindi",
     "director": "Sandeep Reddy Vanga",
     "cast": "Ranbir Kapoor, Anil Kapoor, Bobby Deol, Rashmika Mandanna",
     "description": "A broken father-son bond triggers a path of blood and violence as the son seeks vengeance.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/jafgNqczNcxBs5pBjMoAhOQJsaA.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/bEBqSb2mzZV6jU5UfCexiSJpJr4.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNjNlZWZlZDAtNDJlYy00MzIyLWE0NTUtMmQ0MTRiYWZhMjU0XkEyXkFqcGdeQXVyMTUyNjIwMDEw._V1_SX300.jpg"
   },
   {
-    "id": "b30",
-    "title": "Fighter",
-    "genre": "Action", "subGenre": "Drama", "category": "Bollywood",
-    "rating": 8.6, "duration": 166, "releaseYear": 2024, "language": "Hindi",
-    "director": "Siddharth Anand",
-    "cast": "Hrithik Roshan, Deepika Padukone, Anil Kapoor, Karan Singh Grover",
-    "description": "Top IAF aviators come together to form Air Dragons, showcasing their camaraderie and battles.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/uMgRKvOgXsRmN3Evw3mJLK0xqJl.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/kCGlIMHnOm8JPXQoaAKIW89iM0W.jpg"
+    "id": "b22", "title": "Dunki",
+    "genre": "Comedy", "subGenre": "Drama", "category": "Bollywood",
+    "rating": 8.6, "duration": 161, "releaseYear": 2023, "language": "Hindi",
+    "director": "Rajkumar Hirani",
+    "cast": "Shah Rukh Khan, Taapsee Pannu, Boman Irani, Vicky Kaushal",
+    "description": "Four friends from Punjab take an illegal route to reach England.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMzU1MzEzMTcyMl5BMl5BanBnXkFtZTgwNzU3OTE2NTM@._V1_SX300.jpg"
   },
   {
-    "id": "b31",
-    "title": "Bajirao Mastani",
+    "id": "b23", "title": "Bajirao Mastani",
     "genre": "Romance", "subGenre": "Drama", "category": "Bollywood",
     "rating": 9.2, "duration": 158, "releaseYear": 2015, "language": "Hindi",
     "director": "Sanjay Leela Bhansali",
     "cast": "Ranveer Singh, Deepika Padukone, Priyanka Chopra, Tanvi Azmi",
-    "description": "An epic love story between the heroic Peshwa Bajirao and his second wife, the warrior princess Mastani.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/h1m8i9eVNqxVEVBpNEJFHl5LgA1.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/6ZnNYMb8MfkFSXSHLhfVGg8CGOL.jpg"
+    "description": "An epic love story between the heroic Peshwa Bajirao and warrior princess Mastani.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BODNlZjE5MDItZTg3Ni00NDE3LWI2MGItOGY2MDU5YWFhZjk2XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg"
   },
   {
-    "id": "b32",
-    "title": "Padmaavat",
-    "genre": "Drama", "subGenre": "Romance", "category": "Bollywood",
-    "rating": 9.0, "duration": 164, "releaseYear": 2018, "language": "Hindi",
-    "director": "Sanjay Leela Bhansali",
-    "cast": "Deepika Padukone, Ranveer Singh, Shahid Kapoor, Aditi Rao Hydari",
-    "description": "Queen Padmavati is married to a noble king until a tyrannical Sultan lays siege to capture her.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/1lzpMzLAXbpJQHFWsXXhTNMWqAw.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/6bCcTr4l1t5EFxL3hNxPYt47x2V.jpg"
-  },
-  {
-    "id": "b33",
-    "title": "Devdas",
-    "genre": "Romance", "subGenre": "Drama", "category": "Bollywood",
-    "rating": 9.4, "duration": 185, "releaseYear": 2002, "language": "Hindi",
-    "director": "Sanjay Leela Bhansali",
-    "cast": "Shah Rukh Khan, Madhuri Dixit, Aishwarya Rai Bachchan, Jackie Shroff",
-    "description": "After his family prohibits him from marrying his true love, Devdas Mukherjee's life spirals into vice.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/zFkFe9baSbv56EUP84APZB3OgMT.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/4P0LsA9VNAMFBbEzk5DkHnFHsrE.jpg"
-  },
-  {
-    "id": "b34",
-    "title": "Chennai Express",
-    "genre": "Comedy", "subGenre": "Action", "category": "Bollywood",
-    "rating": 8.8, "duration": 141, "releaseYear": 2013, "language": "Hindi",
-    "director": "Rohit Shetty",
-    "cast": "Shah Rukh Khan, Deepika Padukone, Nikitin Dheer, Sathyaraj",
-    "description": "A man boarding a train to fulfill his grandfather's last wish finds himself helping a runaway bride.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/dP9fBCCFdYAFLHbHCpkGOtOqFd5.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/wFiKAHJFvBnLyM1WEjWFOb34l1l.jpg"
-  },
-  {
-    "id": "b35",
-    "title": "Chak De! India",
+    "id": "b24", "title": "Chak De! India",
     "genre": "Drama", "subGenre": "Sports", "category": "Bollywood",
     "rating": 9.8, "duration": 153, "releaseYear": 2007, "language": "Hindi",
     "director": "Shimit Amin",
     "cast": "Shah Rukh Khan, Vidya Malvade, Sagarika Ghatge, Shilpa Shukla",
-    "description": "Kabir Khan, a former hockey player, coaches the Indian Women's National Hockey Team to a championship.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/jCpwnqFZIj8nw5kMWqM2gWMtR0Z.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/bGLTSfFkzVLxuYRNobpnEhJNjcB.jpg"
+    "description": "Kabir Khan coaches the Indian Women's National Hockey Team to a championship.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMzY4MDk1NjEtMzVkOS00ZjE4LTkzYWUtNjY3NzdkOTIwM2QzXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg"
   },
   {
-    "id": "b36",
-    "title": "Swades",
-    "genre": "Drama", "subGenre": "Drama", "category": "Bollywood",
-    "rating": 9.8, "duration": 189, "releaseYear": 2004, "language": "Hindi",
-    "director": "Ashutosh Gowariker",
-    "cast": "Shah Rukh Khan, Gayatri Joshi, Kishori Ballal",
-    "description": "A successful Indian NASA scientist returns to an Indian village and discovers his true roots.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/3iFBQPNjHibR8OqCRn4Q37DY7Zt.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/4P0LsA9VNAMFBbEzk5DkHnFHsrE.jpg"
-  },
-  {
-    "id": "b37",
-    "title": "Hera Pheri",
-    "genre": "Comedy", "subGenre": "Drama", "category": "Bollywood",
-    "rating": 9.8, "duration": 138, "releaseYear": 2000, "language": "Hindi",
-    "director": "Priyadarshan",
-    "cast": "Akshay Kumar, Sunil Shetty, Paresh Rawal, Tabu",
-    "description": "Three unemployed men find themselves in a hilarious situation when they receive a wrong telephone call from a kidnapper.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/9ZgZRLjJCygCnXgT8QBiH9QBKFX.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/tHisFPblm2yd7DsPl8wHoaYRghr.jpg"
-  },
-  {
-    "id": "b38",
-    "title": "Bhool Bhulaiyaa",
-    "genre": "Comedy", "subGenre": "Horror", "category": "Bollywood",
-    "rating": 9.6, "duration": 159, "releaseYear": 2007, "language": "Hindi",
-    "director": "Priyadarshan",
-    "cast": "Akshay Kumar, Vidya Balan, Shiney Ahuja, Ameesha Patel",
-    "description": "An eccentric psychiatrist is called to help solve the mystery of a haunted palace.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/2YjJGPjIBIZ1NdYINzKYjOHCH0u.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/bGLTSfFkzVLxuYRNobpnEhJNjcB.jpg"
-  },
-
-  {
-    "id": "s1",
-    "title": "RRR",
+    "id": "s1", "title": "RRR",
     "genre": "Action", "subGenre": "Drama", "category": "South Indian",
     "rating": 9.2, "duration": 187, "releaseYear": 2022, "language": "Telugu",
     "director": "S.S. Rajamouli",
     "cast": "Ram Charan, Jr. NTR, Alia Bhatt, Ajay Devgn",
-    "description": "A fictitious story about two legendary revolutionaries and their journey before they started fighting for their country in 1920s.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/nEeh6sMoqVHRfNMrTsENaBgGZOB.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/bQXAqRx2Fgc46uCVWgoPz5L5Dtr.jpg"
+    "description": "A fictitious story about two legendary revolutionaries fighting for their country in the 1920s.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BOGEzYzcxYjAtYWMzNy00MGNiLWJhNTMtYWI4MGY5ZTZlOWQ5XkEyXkFqcGdeQXVyMTI1NDEyNTM5._V1_SX300.jpg"
   },
   {
-    "id": "s2",
-    "title": "Baahubali: The Beginning",
+    "id": "s2", "title": "Baahubali: The Beginning",
     "genre": "Action", "subGenre": "Fantasy", "category": "South Indian",
     "rating": 9.0, "duration": 159, "releaseYear": 2015, "language": "Telugu",
     "director": "S.S. Rajamouli",
     "cast": "Prabhas, Rana Daggubati, Anushka Shetty, Tamannaah Bhatia",
-    "description": "An adventurous man becomes involved in a decadelong feud between two warring brothers at the core of a kingdom.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/dVSfRGLMNiMbGh3CyNFM7l9dWAs.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/8r5fVMKNKf9smTMRGLKHF4x9pRG.jpg"
+    "description": "An adventurous man becomes involved in a decadelong feud between two warring brothers.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BYWVlMjVkYjItZGRjMi00MTU0LWI1MzYtYjg4Y2Q1YzFiMTNlXkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_SX300.jpg"
   },
   {
-    "id": "s3",
-    "title": "Baahubali 2: The Conclusion",
+    "id": "s3", "title": "Baahubali 2: The Conclusion",
     "genre": "Action", "subGenre": "Fantasy", "category": "South Indian",
     "rating": 9.3, "duration": 167, "releaseYear": 2017, "language": "Telugu",
     "director": "S.S. Rajamouli",
     "cast": "Prabhas, Rana Daggubati, Anushka Shetty, Ramya Krishna",
-    "description": "Shiva, the son of Bahubali, returns to avenge his father's death against Bhallaladeva.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/aTOBrXNkDOw7i1J4Pq13bOdCxK4.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/2yumB6eo7RCGM4MN4mllIAjy3pW.jpg"
+    "description": "Shiva returns to avenge his father Bahubali's death against Bhallaladeva.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BN2E5YzNkODctZDZhNS00YTEzLTk5ZTMtYWJlZGQzYzVkNjY2XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg"
   },
   {
-    "id": "s4",
-    "title": "K.G.F: Chapter 1",
+    "id": "s4", "title": "K.G.F: Chapter 1",
     "genre": "Action", "subGenre": "Thriller", "category": "South Indian",
     "rating": 8.8, "duration": 156, "releaseYear": 2018, "language": "Kannada",
     "director": "Prashanth Neel",
     "cast": "Yash, Srinidhi Shetty, Ramachandra Raju",
-    "description": "Rocky, a young man, seeks power and wealth in order to fulfill a promise to his dying mother at the Kolar Gold Fields.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/iOmWMRJqXYMUQGSXlMdPHiQGsLe.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/g3xP3J0h2h6VMpjpB2mCQVVCLrt.jpg"
+    "description": "Rocky seeks power at the Kolar Gold Fields to fulfill a promise to his dying mother.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BYjEyZmQ3MDctM2VmMS00NGMzLWFjNTYtNzJmZDhlMDg3ZGQzXkEyXkFqcGdeQXVyNjkwOTg4MTA@._V1_SX300.jpg"
   },
   {
-    "id": "s5",
-    "title": "K.G.F: Chapter 2",
+    "id": "s5", "title": "K.G.F: Chapter 2",
     "genre": "Action", "subGenre": "Thriller", "category": "South Indian",
     "rating": 9.0, "duration": 168, "releaseYear": 2022, "language": "Kannada",
     "director": "Prashanth Neel",
     "cast": "Yash, Sanjay Dutt, Raveena Tandon, Srinidhi Shetty",
-    "description": "In the blood-soaked Kolar Gold Fields, Rocky's name strikes fear into his foes while the government sees him as a threat.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/FhOGFPE3y4dCDtDqHxlNDy3XKTK.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/8fewbpRVmqBcYjMApqxAaIWL1wS.jpg"
+    "description": "Rocky's name strikes fear in the blood-soaked Kolar Gold Fields while the government calls him a threat.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BYjFjMTQyZDgtNDIzOC00ZWZlLTg2ZDMtNzc5ZDJiMzYxNDFhXkEyXkFqcGdeQXVyMTI1NDEyNTM5._V1_SX300.jpg"
   },
   {
-    "id": "s6",
-    "title": "Pushpa: The Rise",
+    "id": "s6", "title": "Pushpa: The Rise",
     "genre": "Action", "subGenre": "Drama", "category": "South Indian",
     "rating": 8.5, "duration": 179, "releaseYear": 2021, "language": "Telugu",
     "director": "Sukumar",
     "cast": "Allu Arjun, Rashmika Mandanna, Fahadh Faasil",
-    "description": "Pushpa Raj, a coolie, rises to lead the red sandalwood smuggling syndicate in the Seshachalam forests.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/kw3BWAWXHbzFfurJPCJCQFElKaO.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/wcNSJh0AaVoPlHXdD5FX1s3RFoa.jpg"
+    "description": "Pushpa Raj rises to lead the red sandalwood smuggling syndicate.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BZjM5ZmQxNzctNjg1NS00NmQ0LWJmNDQtMGM1OWZiMGY1NjQ2XkEyXkFqcGdeQXVyMTIyNzY1NzM@._V1_SX300.jpg"
   },
   {
-    "id": "s7",
-    "title": "Kantara",
+    "id": "s7", "title": "Kantara",
     "genre": "Fantasy", "subGenre": "Thriller", "category": "South Indian",
     "rating": 8.9, "duration": 149, "releaseYear": 2022, "language": "Kannada",
     "director": "Rishab Shetty",
     "cast": "Rishab Shetty, Sapthami Gowda, Kishore",
-    "description": "A young tribal man reluctantly inherits his ancestors' legacy to restore peace in his village when greed leads to betrayal.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/i5JLBdXjkFZKiSRIGX9O1RMusSI.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/kO2Xq0V3z4KatXnIe4ckVTzIhSn.jpg"
+    "description": "A tribal man reluctantly inherits his ancestors' legacy to restore peace when greed leads to betrayal.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BOWQ5ZWQwNGEtOGE3ZC00ZDE1LWI2YjgtMjU4NTQ3ZGNhM2ZlXkEyXkFqcGdeQXVyMTI1NDEyNTM5._V1_SX300.jpg"
   },
   {
-    "id": "s8",
-    "title": "Jailer",
+    "id": "s8", "title": "Jailer",
     "genre": "Action", "subGenre": "Thriller", "category": "South Indian",
     "rating": 8.4, "duration": 168, "releaseYear": 2023, "language": "Tamil",
     "director": "Nelson Dilipkumar",
     "cast": "Rajinikanth, Vinayakan, Ramya Krishnan, Mohanlal",
-    "description": "A retired prison warden tracks down his son's killers, unleashing his dark past in the process.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/tUGkxMCdUbOMORlHCJXBWHifqeh.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/8r5fVMKNKf9smTMRGLKHF4x9pRG.jpg"
+    "description": "A retired prison warden tracks down his son's killers, unleashing his dark past.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNDI4YzY5NDYtZTRlYS00NjY5LWE5OTUtYTEzYWMyYjE4ZGRiXkEyXkFqcGdeQXVyMTUyNjIwMDEw._V1_SX300.jpg"
   },
   {
-    "id": "s9",
-    "title": "Vikram",
+    "id": "s9", "title": "Vikram",
     "genre": "Action", "subGenre": "Thriller", "category": "South Indian",
     "rating": 8.7, "duration": 175, "releaseYear": 2022, "language": "Tamil",
     "director": "Lokesh Kanagaraj",
     "cast": "Kamal Haasan, Vijay Sethupathi, Fahadh Faasil, Narain",
-    "description": "A cop investigates a series of murders by masked men while dealing with drug cartel conspiracies.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/7bWxAsNPv9CXHOhZbJQCl0Dn9LT.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/bQXAqRx2Fgc46uCVWgoPz5L5Dtr.jpg"
+    "description": "A cop investigates murders by masked men while dealing with drug cartel conspiracies.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMWU4ZTVjNmEtZWJiZC00ZTE1LTlhNjItN2U2NjE5YzAwOTE5XkEyXkFqcGdeQXVyMTUyNjIwMDEw._V1_SX300.jpg"
   },
   {
-    "id": "s10",
-    "title": "Leo",
+    "id": "s10", "title": "Leo",
     "genre": "Action", "subGenre": "Thriller", "category": "South Indian",
     "rating": 8.2, "duration": 164, "releaseYear": 2023, "language": "Tamil",
     "director": "Lokesh Kanagaraj",
     "cast": "Thalapathy Vijay, Sanjay Dutt, Trisha Krishnan",
-    "description": "A mild-mannered cafe owner becomes the target of a drug cartel claiming he is the son of a powerful gangster.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/5PeaBF0JE3FYU7ygBiDntKSzBJz.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/bQXAqRx2Fgc46uCVWgoPz5L5Dtr.jpg"
+    "description": "A mild-mannered cafe owner becomes the target of a drug cartel claiming he is a gangster's son.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BZTU2MjVjMGEtN2VjYy00ZTRmLTk5YzgtNDgwMmExMWVkZmZjXkEyXkFqcGdeQXVyMTUyNjIwMDEw._V1_SX300.jpg"
   },
   {
-    "id": "s11",
-    "title": "Ponniyin Selvan: Part I",
+    "id": "s11", "title": "Ponniyin Selvan: Part I",
     "genre": "Drama", "subGenre": "Action", "category": "South Indian",
     "rating": 8.1, "duration": 167, "releaseYear": 2022, "language": "Tamil",
     "director": "Mani Ratnam",
     "cast": "Vikram, Aishwarya Rai Bachchan, Jayam Ravi, Karthi, Trisha",
     "description": "Vandiyathevan crosses the Chola land to deliver a message from the Crown Prince amid deadly conspiracies.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/4YpDFWmHdl8yCQMR6DPRgfLJvjG.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/oH35GUsFNjAZC0mMI8DTyMFoFfM.jpg"
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BYzg4NzEyMWUtOTY0Yi00ZWJhLTkyOWEtMmM1NTRmNGIwZjkxXkEyXkFqcGdeQXVyMTUyNjIwMDEw._V1_SX300.jpg"
   },
   {
-    "id": "s12",
-    "title": "Ponniyin Selvan: Part II",
-    "genre": "Drama", "subGenre": "Action", "category": "South Indian",
-    "rating": 8.3, "duration": 164, "releaseYear": 2023, "language": "Tamil",
-    "director": "Mani Ratnam",
-    "cast": "Vikram, Aishwarya Rai Bachchan, Jayam Ravi, Karthi, Trisha",
-    "description": "Arulmozhi Varman continues his journey to ascend the Chola throne while Nandini's vengeance looms large.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/8V0vxjYhVDiQBQvvxvFl63WzD98.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/oH35GUsFNjAZC0mMI8DTyMFoFfM.jpg"
-  },
-  {
-    "id": "s13",
-    "title": "Minnal Murali",
-    "genre": "Action", "subGenre": "Sci-Fi", "category": "South Indian",
-    "rating": 8.5, "duration": 158, "releaseYear": 2021, "language": "Malayalam",
-    "director": "Basil Joseph",
-    "cast": "Tovino Thomas, Guru Somasundaram, Femina George",
-    "description": "A tailor gains superpowers after being struck by lightning and must protect his village from a dark force.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/5fhZdwP1DVJ0FyVH6vrFdHwpXIn.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/k0DfbIqnWCq3UlHN2VqKUxMmT9r.jpg"
-  },
-  {
-    "id": "s14",
-    "title": "Lucifer",
-    "genre": "Thriller", "subGenre": "Drama", "category": "South Indian",
-    "rating": 8.4, "duration": 175, "releaseYear": 2019, "language": "Malayalam",
-    "director": "Prithviraj Sukumaran",
-    "cast": "Mohanlal, Vivek Oberoi, Manju Warrier, Tovino Thomas",
-    "description": "A political godfather dies, leaving a vacuum of power. A mysterious man named Stephen steps into the fray.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/8FoZ0FLi0Mv8CqmPRpOHMu9rRZc.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/nE3WDiCmDFIkCOumGTCsEEzSoLE.jpg"
-  },
-  {
-    "id": "s15",
-    "title": "Manjummel Boys",
+    "id": "s12", "title": "Manjummel Boys",
     "genre": "Drama", "subGenre": "Thriller", "category": "South Indian",
     "rating": 9.1, "duration": 135, "releaseYear": 2024, "language": "Malayalam",
     "director": "Chidambaram",
     "cast": "Soubin Shahir, Sreenath Bhasi, Balu Varghese",
-    "description": "A group of friends from Kerala get trapped inside the deep Guna Caves, prompting a daring rescue attempt.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/5GOmCqNFxJJfP7oTQI85M8iGZRX.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/kO2Xq0V3z4KatXnIe4ckVTzIhSn.jpg"
+    "description": "A group of friends from Kerala attempt a daring rescue after one gets trapped in Guna Caves.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMTQ3MTg0YjQtMTZmMy00MzQzLTliZTMtZTM5YTkxYzliMTZkXkEyXkFqcGdeQXVyMTUyNjIwMDEw._V1_SX300.jpg"
   },
   {
-    "id": "s16",
-    "title": "Aavesham",
-    "genre": "Comedy", "subGenre": "Action", "category": "South Indian",
-    "rating": 8.9, "duration": 158, "releaseYear": 2024, "language": "Malayalam",
-    "director": "Jithu Madhavan",
-    "cast": "Fahadh Faasil, Sajin Gopu, Mansoor Ali Khan",
-    "description": "Three college students in Bangalore befriend a quirky local gangster named Ranga to seek revenge on their seniors.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/3RbRnH7wIaETuVJpbA5xJY6vn9P.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/k0DfbIqnWCq3UlHN2VqKUxMmT9r.jpg"
-  },
-  {
-    "id": "s17",
-    "title": "Kalki 2898 AD",
+    "id": "s13", "title": "Kalki 2898 AD",
     "genre": "Sci-Fi", "subGenre": "Action", "category": "South Indian",
     "rating": 8.6, "duration": 181, "releaseYear": 2024, "language": "Telugu",
     "director": "Nag Ashwin",
     "cast": "Prabhas, Amitabh Bachchan, Kamal Haasan, Deepika Padukone",
-    "description": "A modern avatar of Vishnu is prophesied to descend to Earth to protect forces of good in a post-apocalyptic world.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/bFli2IJ9DEWxqgWpRYSzEHBjRfS.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/xDMIl84Qo5Tsu62c9DGWhmPI67A.jpg"
+    "description": "A modern avatar of Vishnu is prophesied to protect forces of good in a post-apocalyptic world.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BZjQ1NWY5ZTYtZmM1ZC00NjQzLWIwZTAtZWE2ZTJiNzliZjFmXkEyXkFqcGdeQXVyMTUyNjIwMDEw._V1_SX300.jpg"
   },
   {
-    "id": "s18",
-    "title": "HanuMan",
-    "genre": "Action", "subGenre": "Fantasy", "category": "South Indian",
-    "rating": 8.7, "duration": 158, "releaseYear": 2024, "language": "Telugu",
-    "director": "Prasanth Varma",
-    "cast": "Teja Sajja, Amritha Aiyer, Varalaxmi Sarathkumar",
-    "description": "An underdog gets the power of Lord Hanuman and fights a greedy villain who wants to rule the world.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/7ZSmLRfxVFwVfuISSyLlDhVxjqN.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/bQXAqRx2Fgc46uCVWgoPz5L5Dtr.jpg"
-  },
-  {
-    "id": "s19",
-    "title": "Premalu",
-    "genre": "Romance", "subGenre": "Comedy", "category": "South Indian",
-    "rating": 8.4, "duration": 156, "releaseYear": 2024, "language": "Malayalam",
-    "director": "Girish A.D.",
-    "cast": "Naslen K. Gafoor, Mamitha Baiju, Althaf Salim",
-    "description": "A hilarious romantic comedy about a young man in Hyderabad who tries to win a girl's heart through misadventures.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/k9KAmXqcP9re9XoMrWLYJfmGzfD.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/k0DfbIqnWCq3UlHN2VqKUxMmT9r.jpg"
-  },
-  {
-    "id": "s20",
-    "title": "Master",
-    "genre": "Action", "subGenre": "Thriller", "category": "South Indian",
-    "rating": 8.1, "duration": 179, "releaseYear": 2021, "language": "Tamil",
-    "director": "Lokesh Kanagaraj",
-    "cast": "Thalapathy Vijay, Vijay Sethupathi, Malavika Mohanan",
-    "description": "An alcoholic professor sent to a juvenile school clashes with a ruthless gangster who uses children for crime.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/1KYFhRZj1p6aSNNj7KbqPYpxT5I.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/bQXAqRx2Fgc46uCVWgoPz5L5Dtr.jpg"
-  },
-  {
-    "id": "s21",
-    "title": "Salaar: Part 1 - Ceasefire",
-    "genre": "Action", "subGenre": "Drama", "category": "South Indian",
-    "rating": 8.0, "duration": 175, "releaseYear": 2023, "language": "Telugu",
-    "director": "Prashanth Neel",
-    "cast": "Prabhas, Prithviraj Sukumaran, Shruti Haasan",
-    "description": "Two childhood friends in the lawless city-state of Khansaar become deadly rivals in a battle for power.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/3bj3AZVPYQFRKXbhpTh86fEGJcM.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/8r5fVMKNKf9smTMRGLKHF4x9pRG.jpg"
-  },
-  {
-    "id": "s22",
-    "title": "Drishyam (Malayalam)",
-    "genre": "Thriller", "subGenre": "Drama", "category": "South Indian",
-    "rating": 9.3, "duration": 160, "releaseYear": 2013, "language": "Malayalam",
-    "director": "Jeethu Joseph",
-    "cast": "Mohanlal, Meena, Ansiba Hassan",
-    "description": "A cable TV operator goes to extreme lengths to protect his family from police investigation after an accidental crime.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/5jRDCpVQIYbOD8CJ22ZtMXJRmfc.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/oVo2S2YEFuP4T0h6bSQLjy3mQEZ.jpg"
-  },
-  {
-    "id": "s23",
-    "title": "Sita Ramam",
-    "genre": "Romance", "subGenre": "Drama", "category": "South Indian",
-    "rating": 9.1, "duration": 163, "releaseYear": 2022, "language": "Telugu",
-    "director": "Hanu Raghavapudi",
-    "cast": "Dulquer Salmaan, Mrunal Thakur, Rashmika Mandanna",
-    "description": "An orphaned soldier's life changes after he receives a letter from a girl named Sita. He sets out to find her.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/eXFNv2wVnuKFKp3rj1V0MuWIYPN.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/oH35GUsFNjAZC0mMI8DTyMFoFfM.jpg"
-  },
-  {
-    "id": "s24",
-    "title": "Pushpa 2: The Rule",
+    "id": "s14", "title": "Pushpa 2: The Rule",
     "genre": "Action", "subGenre": "Drama", "category": "South Indian",
     "rating": 8.8, "duration": 175, "releaseYear": 2024, "language": "Telugu",
     "director": "Sukumar",
     "cast": "Allu Arjun, Rashmika Mandanna, Fahadh Faasil",
-    "description": "The clash continues between Pushpa Raj, now the undisputed smuggling ruler, and SP Bhanwar Singh Shekhawat.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/sFT5HzBnHiXDWMVFcKqeHDHyDpA.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/wcNSJh0AaVoPlHXdD5FX1s3RFoa.jpg"
+    "description": "The clash continues between Pushpa Raj and SP Bhanwar Singh Shekhawat for the red sandalwood empire.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BZjk4ZTVlMTYtMzMzMC00OGFkLWJmN2YtODFiZWFlY2VhZjVjXkEyXkFqcGdeQXVyMTUyNjIwMDEw._V1_SX300.jpg"
   },
   {
-    "id": "s25",
-    "title": "Major",
+    "id": "s15", "title": "Sita Ramam",
+    "genre": "Romance", "subGenre": "Drama", "category": "South Indian",
+    "rating": 9.1, "duration": 163, "releaseYear": 2022, "language": "Telugu",
+    "director": "Hanu Raghavapudi",
+    "cast": "Dulquer Salmaan, Mrunal Thakur, Rashmika Mandanna",
+    "description": "An orphaned soldier's life changes after he receives a letter from a mysterious girl named Sita.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMDFlZmRlZDUtNGU4Yy00ZjA5LWI4MTMtZDM3MTM0NTUwMzI2XkEyXkFqcGdeQXVyMTI1NDEyNTM5._V1_SX300.jpg"
+  },
+  {
+    "id": "s16", "title": "Major",
     "genre": "Drama", "subGenre": "Action", "category": "South Indian",
     "rating": 8.9, "duration": 150, "releaseYear": 2022, "language": "Telugu",
     "director": "Sashi Kiran Tikka",
     "cast": "Adivi Sesh, Sobhita Dhulipala, Saiee Manjrekar",
-    "description": "Based on the life of Major Sandeep Unnikrishnan, who was martyred during the 2008 Mumbai terror attacks.",
-    "posterUrl": "https://image.tmdb.org/t/p/w500/56MQN6StVsNcEPUAaRPqiTpk3gI.jpg",
-    "backdropUrl": "https://image.tmdb.org/t/p/w1280/bQXAqRx2Fgc46uCVWgoPz5L5Dtr.jpg"
+    "description": "Based on the life of Major Sandeep Unnikrishnan, martyred during the 2008 Mumbai attacks.",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BZTFjNzllYWYtODNkNC00OTZlLTlmNDctMDU3YzI4NzgxZGRkXkEyXkFqcGdeQXVyMTUyNjIwMDEw._V1_SX300.jpg"
   }
 ];
 
